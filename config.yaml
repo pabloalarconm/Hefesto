@@ -1,0 +1,16 @@
+Birth_date:
+  columns:
+    pid: pat_id
+    valueOutputDate: birthdate
+
+Sex:
+  columns:
+    pid: pat_id
+    valueAttributeIRI: sex
+
+Diagnosis:
+  columns:
+    pid: pat_id
+    valueAttributeIRI: diagnosis
+
+    
