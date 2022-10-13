@@ -7,7 +7,7 @@ Makes easier to allign with EJP CDE semantic model requirements
 
 ## To install:
 ```bash
-pip install hefesto
+pip install Hefesto
 ```
 
 
