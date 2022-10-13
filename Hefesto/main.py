@@ -1,26 +1,24 @@
 import pandas as pd
-import yaml
 from pyperseo.functions import milisec as milisec
+from Hefesto.template import Template
+import sys
 
 
 class Hefesto:
 
-    def transform_shape(path_datainput,path_config_file,path_output_file):
+    def transform_shape(path_datainput,configuration):
 
-        configuration = None
+        if type(configuration) is not dict:
+            sys.exit("configuration file must be a dictionary from a Python, YAML or JSON file")
 
-        # Import YAML template for each CDE's static term:
-        with open("template/template_model.yaml") as file:
-            template = yaml.load(file, Loader=yaml.FullLoader)
+        
+        # Import static template for all CDE terms:
+        temp = Template.template_model
 
         # Import data input:
         df_data = pd.read_csv(path_datainput)
-
-        # Import YAML config file:
-        with open(path_config_file) as file:
-            configuration = yaml.load(file, Loader=yaml.FullLoader)
-
         
+        # Empty objects:
         resulting_df = pd.DataFrame()
         row_df = {}
 
@@ -36,7 +34,7 @@ class Hefesto:
                 row_df.update({milisec_point: {'model':config[0]}})
                 
                 # Add YAML template static information
-                for cde in template.items():
+                for cde in temp.items():
                     if cde[0] == row_df[milisec_point]["model"]:
                         row_df[milisec_point].update(cde[1])
 
@@ -52,5 +50,8 @@ class Hefesto:
                 resulting_df = pd.concat([resulting_df, final_row_df])
         
 
+        return resulting_df
+
         # Export to CSV
-        resulting_df.to_csv (path_output_file, index = False, header=True)
+        #resulting_df.to_csv (path_output_file, index = False, header=True)
+
