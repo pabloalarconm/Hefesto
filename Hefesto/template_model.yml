@@ -4,12 +4,12 @@ Birth_date:
   inputURI:
   attributeURI: http://purl.obolibrary.org/obo/NCIT_C68615
   valueAttributeIRI:
-  valueOutputDate:
-  valueOutputNumber:
-  valueOutputString:
-  valueInputString:
+  valueOutput:
+  datatype: xsd:date
   pid:
   chronoid:
+  startdate:
+  enddate:
 
 Sex:
   processURI: http://purl.obolibrary.org/obo/NCIT_C142470
@@ -17,12 +17,12 @@ Sex:
   inputURI:
   attributeURI: http://purl.obolibrary.org/obo/NCIT_C28421
   valueAttributeIRI:
-  valueOutputDate:
-  valueOutputNumber:
-  valueOutputString:
-  valueInputString:
+  valueOutput:
+  datatype: xsd.string
   pid:
   chronoid:
+  startdate:
+  enddate:
 
 Patient_status:
   processURI: http://purl.obolibrary.org/obo/NCIT_C142470
@@ -30,12 +30,12 @@ Patient_status:
   inputURI:
   attributeURI: http://purl.obolibrary.org/obo/NCIT_C166244
   valueAttributeIRI:
-  valueOutputDate:
-  valueOutputNumber:
-  valueOutputString:
-  valueInputString:
+  valueOutput:
+  datatype: xsd:string
   pid:
   chronoid:
+  startdate:
+  enddate:
 
 Date_of_death:
   processURI: http://purl.obolibrary.org/obo/NCIT_C142470
@@ -43,12 +43,12 @@ Date_of_death:
   inputURI:
   attributeURI: http://purl.obolibrary.org/obo/NCIT_C70810
   valueAttributeIRI:
-  valueOutputDate:
-  valueOutputNumber:
-  valueOutputString:
-  valueInputString:
+  valueOutput:
+  datatype: xsd:date
   pid:
   chronoid:
+  startdate:
+  enddate:
 
 Care_pathway:
   processURI: http://purl.obolibrary.org/obo/NCIT_C159705
@@ -56,24 +56,25 @@ Care_pathway:
   inputURI:
   attributeURI: http://purl.obolibrary.org/obo/NCIT_C164021
   valueAttributeIRI:
-  valueOutputDate:
-  valueOutputNumber:
-  valueOutputString:
-  valueInputString:
+  valueOutput:
+  datatype: xsd:date
   pid:
   chronoid:
+  startdate:
+  enddate:
+
 Diagnosis:
   processURI: http://purl.obolibrary.org/obo/NCIT_C15220
   outputURI: http://purl.obolibrary.org/obo/NCIT_C103159
   inputURI:
   attributeURI: http://purl.obolibrary.org/obo/NCIT_C25482
   valueAttributeIRI:
-  valueOutputDate:
-  valueOutputNumber:
-  valueOutputString:
-  valueInputString:
+  valueOutput:
+  datatype: xsd:string
   pid:
   chronoid:
+  startdate:
+  enddate:
 
 Date_of_diagnosis:
   processURI: http://purl.obolibrary.org/obo/NCIT_C142470
@@ -81,12 +82,16 @@ Date_of_diagnosis:
   inputURI:
   attributeURI: http://purl.obolibrary.org/obo/NCIT_C156420
   valueAttributeIRI:
+  valueOutput:
+  datatype: xsd:date
   valueOutputDate:
   valueOutputNumber:
   valueOutputString:
   valueInputString:
   pid:
   chronoid:
+  startdate:
+  enddate:
 
 Onset_of_symptoms:
   processURI: http://purl.obolibrary.org/obo/NCIT_C142470
@@ -94,12 +99,12 @@ Onset_of_symptoms:
   inputURI:
   attributeURI: http://purl.obolibrary.org/obo/NCIT_C25279
   valueAttributeIRI:
-  valueOutputDate:
-  valueOutputNumber:
-  valueOutputString:
-  valueInputString:
+  valueOutput:
+  datatype: xsd:date
   pid:
   chronoid:
+  startdate:
+  enddate:
 
 Phenotype:
   processURI: http://purl.obolibrary.org/obo/NCIT_C25305
@@ -107,12 +112,12 @@ Phenotype:
   inputURI:
   attributeURI: http://semanticscience.org/resource/SIO_010056
   valueAttributeIRI:
-  valueOutputDate:
-  valueOutputNumber:
-  valueOutputString:
-  valueInputString:
+  valueOutput:
+  datatype: xsd:string
   pid:
   chronoid:
+  startdate:
+  enddate:
 
 Genotype_OMIM:
   processURI: http://purl.obolibrary.org/obo/NCIT_C15709
@@ -120,40 +125,12 @@ Genotype_OMIM:
   inputURI:
   attributeURI: http://purl.obolibrary.org/obo/NCIT_C17938
   valueAttributeIRI:
-  valueOutputDate:
-  valueOutputNumber:
-  valueOutputString:
-  valueInputString:
+  valueOutput:
+  datatype: xsd:string
   pid:
   chronoid:
-
-
-Genotype_HGNC:
-  processURI: http://purl.obolibrary.org/obo/NCIT_C15709
-  outputURI: http://edamontology.org/data_2295
-  inputURI:
-  attributeURI: http://purl.obolibrary.org/obo/NCIT_C17938
-  valueAttributeIRI:
-  valueOutputDate:
-  valueOutputNumber:
-  valueOutputString:
-  valueInputString:
-  pid:
-  chronoid:
-
-
-Genotype_HGVS:
-  processURI: http://purl.obolibrary.org/obo/NCIT_C15709
-  outputURI: http://semanticscience.org/resource/SIO_001388
-  inputURI:
-  attributeURI: http://purl.obolibrary.org/obo/NCIT_C17938
-  valueAttributeIRI:
-  valueOutputDate:
-  valueOutputNumber:
-  valueOutputString:
-  valueInputString:
-  pid:
-  chronoid:
+  startdate:
+  enddate:
 
 Consent:
   processURI: http://purl.obolibrary.org/obo/OBI_0000810
@@ -161,12 +138,12 @@ Consent:
   inputURI: http://purl.obolibrary.org/obo/ICO_0000001
   attributeURI: http://purl.obolibrary.org/obo/NCIT_C25460
   valueAttributeIRI:
-  valueOutputDate:
-  valueOutputNumber:
-  valueOutputString:
-  valueInputString:
+  valueOutput:
+  datatype: xsd:string
   pid:
   chronoid:
+  startdate:
+  enddate:
 
 Biobanking:
   processURI: http://purl.obolibrary.org/obo/OMIABIS_0000061
@@ -174,12 +151,12 @@ Biobanking:
   inputURI: http://purl.obolibrary.org/obo/OMIABIS_0000000
   attributeURI: http://purl.obolibrary.org/obo/NCIT_C25429
   valueAttributeIRI:
-  valueOutputDate:
-  valueOutputNumber:
-  valueOutputString:
-  valueInputString:
+  valueOutput:
+  datatype: xsd:string
   pid:
   chronoid:
+  startdate:
+  enddate:
 
 Disability:
   processURI:
@@ -187,10 +164,10 @@ Disability:
   inputURI: http://purl.obolibrary.org/obo/NCIT_C17048
   attributeURI: http://purl.obolibrary.org/obo/NCIT_C21007
   valueAttributeIRI:
-  valueOutputDate:
-  valueOutputNumber:
-  valueOutputString:
-  valueInputString:
+  valueOutput:
+  datatype: xsd:string
   pid:
   chronoid:
+  startdate:
+  enddate:
 

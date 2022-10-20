@@ -1,7 +1,7 @@
 Birth_date:
   columns:
     pid: pat_id
-    valueOutputDate: birthdate
+    valueOutput: birthdate
 
 Sex:
   columns:
