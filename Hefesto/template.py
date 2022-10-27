@@ -27,7 +27,7 @@ class Template:
     stardate = None,
     enddate = None,
     pid = None,
-    chronoid = None,
+    chronoid = None
   ),
 
 
@@ -126,6 +126,32 @@ class Template:
     processURI= "http://purl.obolibrary.org/obo/NCIT_C15709",
     outputURI= "http://purl.obolibrary.org/obo/NCIT_C17248",
     attributeURI= None,
+    valueAttributeIRI = None,
+    valueOutput = None,
+    datatype = "xsd:string",
+    stardate = None,
+    enddate = None,
+    pid = None,
+    chronoid = None
+  ),
+
+  Genotype_OMIM = dict(
+    processURI= "http://purl.obolibrary.org/obo/NCIT_C15709",
+    outputURI= "http://purl.obolibrary.org/obo/NCIT_C17248",
+    attributeURI= "http://edamontology.org/data_1153",
+    valueAttributeIRI = None,
+    valueOutput = None,
+    datatype = "xsd:string",
+    stardate = None,
+    enddate = None,
+    pid = None,
+    chronoid = None
+  ),
+
+  Genotype_HGNC = dict(
+    processURI= "http://purl.obolibrary.org/obo/NCIT_C15709",
+    outputURI= "http://purl.obolibrary.org/obo/NCIT_C17248",
+    attributeURI= "http://edamontology.org/data_2295",
     valueAttributeIRI = None,
     valueOutput = None,
     datatype = "xsd:string",

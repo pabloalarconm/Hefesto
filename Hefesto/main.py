@@ -2,6 +2,7 @@ import pandas as pd
 from pyperseo.functions import milisec as milisec
 from Hefesto.template import Template
 import sys
+import yaml
 
 
 class Hefesto:
@@ -44,14 +45,27 @@ class Hefesto:
                         if r == element[1]:
                             dict_element = {element[0]:row[1][r]}
                             row_df[milisec_point].update(dict_element)
-                
-                # Add new dict with extracted information into a Data frame
-                final_row_df = pd.DataFrame(row_df[milisec_point], index=[1])
+
+                # Delete all "empty" row that doesnt contain valueOutput
+                if row_df[milisec_point]["valueOutput"] == None:
+                    del row_df[milisec_point]
+                else:
+                    # Add new dict with extracted information into a Data frame
+                    final_row_df = pd.DataFrame(row_df[milisec_point], index=[1])
                 resulting_df = pd.concat([resulting_df, final_row_df])
-        
+
+        # uniqid (re)generation:
+        resulting_df = resulting_df.reset_index(drop=True)
+
+        resulting_df['uniqid'] = ""
+        for i in resulting_df.index:
+            resulting_df.at[i, "uniqid"] = milisec()
 
         return resulting_df
 
-        # Export to CSV
-        #resulting_df.to_csv (path_output_file, index = False, header=True)
+# # Test
+# with open("../data/config.yaml") as file:
+#     configuration = yaml.load(file, Loader=yaml.FullLoader)
 
+# test = Hefesto.transform_shape(path_datainput ="../data/exemplarCDEdata.csv", configuration=configuration)
+# test.to_csv ("../data/result.csv", index = False, header=True)
