@@ -10,7 +10,7 @@ class Template:
     valueAttributeIRI = None,
     valueOutput = None,
     datatype = "xsd:date",
-    stardate = None,
+    startdate = None,
     enddate = None,
     pid = None,
     chronoid = None
@@ -24,21 +24,21 @@ class Template:
     valueAttributeIRI = None,
     valueOutput = None,
     datatype = "xsd:string",
-    stardate = None,
+    startdate = None,
     enddate = None,
     pid = None,
     chronoid = None
   ),
 
 
-  Patient_status = dict(
+  Status = dict(
     processURI= "http://purl.obolibrary.org/obo/NCIT_C142470",
     outputURI= "http://purl.obolibrary.org/obo/NCIT_C103159",
     attributeURI= "http://purl.obolibrary.org/obo/NCIT_C166244",
     valueAttributeIRI = None,
     valueOutput = None,
     datatype = "xsd:string",
-    stardate = None,
+    startdate = None,
     enddate = None,
     pid = None,
     chronoid = None
@@ -51,7 +51,7 @@ class Template:
     valueAttributeIRI = None,
     valueOutput = None,
     datatype = "xsd:date",
-    stardate = None,
+    startdate = None,
     enddate = None,
     pid = None,
     chronoid = None
@@ -64,7 +64,7 @@ class Template:
     valueAttributeIRI = None,
     valueOutput = None,
     datatype = "xsd:date",
-    stardate = None,
+    startdate = None,
     enddate = None,
     pid = None,
     chronoid = None
@@ -77,7 +77,7 @@ class Template:
     valueAttributeIRI = None,
     valueOutput = None,
     datatype = "xsd:string",
-    stardate = None,
+    startdate = None,
     enddate = None,
     pid = None,
     chronoid = None
@@ -90,7 +90,7 @@ class Template:
     valueAttributeIRI = None,
     valueOutput = None,
     datatype = "xsd:date",
-    stardate = None,
+    startdate = None,
     enddate = None,
     pid = None,
     chronoid = None
@@ -103,7 +103,7 @@ class Template:
     valueAttributeIRI = None,
     valueOutput = None,
     datatype = "xsd:date",
-    stardate = None,
+    startdate = None,
     enddate = None,
     pid = None,
     chronoid = None
@@ -116,7 +116,7 @@ class Template:
     valueAttributeIRI = None,
     valueOutput = None,
     datatype = "xsd:date",
-    stardate = None,
+    startdate = None,
     enddate = None,
     pid = None,
     chronoid = None
@@ -129,7 +129,7 @@ class Template:
     valueAttributeIRI = None,
     valueOutput = None,
     datatype = "xsd:string",
-    stardate = None,
+    startdate = None,
     enddate = None,
     pid = None,
     chronoid = None
@@ -142,7 +142,7 @@ class Template:
     valueAttributeIRI = None,
     valueOutput = None,
     datatype = "xsd:string",
-    stardate = None,
+    startdate = None,
     enddate = None,
     pid = None,
     chronoid = None
@@ -155,7 +155,7 @@ class Template:
     valueAttributeIRI = None,
     valueOutput = None,
     datatype = "xsd:string",
-    stardate = None,
+    startdate = None,
     enddate = None,
     pid = None,
     chronoid = None
@@ -168,7 +168,7 @@ class Template:
     valueAttributeIRI = None,
     valueOutput = None,
     datatype = "xsd:string",
-    stardate = None,
+    startdate = None,
     enddate = None,
     pid = None,
     chronoid = None
@@ -181,7 +181,7 @@ class Template:
     valueAttributeIRI = None,
     valueOutput = None,
     datatype = "xsd:string",
-    stardate = None,
+    startdate = None,
     enddate = None,
     pid = None,
     chronoid = None
@@ -194,7 +194,7 @@ class Template:
     valueAttributeIRI = None,
     valueOutput = None,
     datatype = "xsd:float",
-    stardate = None,
+    startdate = None,
     enddate = None,
     pid = None,
     chronoid = None
