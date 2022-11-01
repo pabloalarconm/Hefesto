@@ -3,7 +3,7 @@ class Template:
 
   template_model = dict(
 
-  Birth_date = dict(
+  Birthdate = dict(
     processURI = "http://purl.obolibrary.org/obo/NCIT_C142470",
     outputURI = "http://www.ebi.ac.uk/efo/EFO_0006921",
     attributeURI = "http://purl.obolibrary.org/obo/NCIT_C68615",
@@ -96,7 +96,7 @@ class Template:
     chronoid = None
   ),
 
-  Onset_of_symptoms = dict(
+  Date_of_symptoms = dict(
     processURI= "http://purl.obolibrary.org/obo/NCIT_C142470",
     outputURI = None,
     attributeURI= "http://purl.obolibrary.org/obo/NCIT_C25279",
@@ -174,7 +174,7 @@ class Template:
     chronoid = None
   ),
 
-  Biobanking = dict(
+  Biobank = dict(
     processURI= "http://purl.obolibrary.org/obo/OMIABIS_0000061",
     outputURI= "http://purl.obolibrary.org/obo/NCIT_C115570",
     attributeURI= "http://purl.obolibrary.org/obo/NCIT_C25429",
