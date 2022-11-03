@@ -47,12 +47,17 @@ class Hefesto:
                             row_df[milisec_point].update(dict_element)
 
                 # Delete all "empty" row that doesnt contain valueOutput
+                # print(row_df[milisec_point]["valueOutput"])
                 if row_df[milisec_point]["valueOutput"] == None:
                     del row_df[milisec_point]
+                elif type(row_df[milisec_point]["valueOutput"])== str and len(row_df[milisec_point]["valueOutput"]) == 0: 
+                    del row_df[milisec_point]
                 else:
+                    print(row_df[milisec_point]["valueOutput"])
+
                     # Add new dict with extracted information into a Data frame
                     final_row_df = pd.DataFrame(row_df[milisec_point], index=[1])
-                resulting_df = pd.concat([resulting_df, final_row_df])
+                    resulting_df = pd.concat([resulting_df, final_row_df])
 
         # uniqid (re)generation:
         resulting_df = resulting_df.reset_index(drop=True)
@@ -67,5 +72,5 @@ class Hefesto:
 with open("../data/config.yaml") as file:
     configuration = yaml.load(file, Loader=yaml.FullLoader)
 
-test = Hefesto.transform_shape(path_datainput ="../data/exemplarCDEdata2.csv", configuration=configuration)
+test = Hefesto.transform_shape(path_datainput ="../data/exemplarCDEdata3.csv", configuration=configuration)
 test.to_csv ("../data/result.csv", index = False, header=True)
