@@ -4,7 +4,6 @@ from Hefesto.template import Template
 import sys
 import yaml
 
-
 class Hefesto:
 
     def transform_shape(path_datainput,configuration):
@@ -46,15 +45,11 @@ class Hefesto:
                             dict_element = {element[0]:row[1][r]}
                             row_df[milisec_point].update(dict_element)
 
-                # Delete all "empty" row that doesnt contain valueOutput
-                # print(row_df[milisec_point]["valueOutput"])
-                if row_df[milisec_point]["valueOutput"] == None:
+                # Delete all "empty" row that doesnt contain valueOutput or nan
+                if row_df[milisec_point]["valueOutput"] == None or type(row_df[milisec_point]["valueOutput"]) == float:
                     del row_df[milisec_point]
-                elif type(row_df[milisec_point]["valueOutput"])== str and len(row_df[milisec_point]["valueOutput"]) == 0: 
-                    del row_df[milisec_point]
-                else:
-                    print(row_df[milisec_point]["valueOutput"])
 
+                else:
                     # Add new dict with extracted information into a Data frame
                     final_row_df = pd.DataFrame(row_df[milisec_point], index=[1])
                     resulting_df = pd.concat([resulting_df, final_row_df])
@@ -69,8 +64,8 @@ class Hefesto:
         return resulting_df
 
 # # Test
-with open("../data/config.yaml") as file:
-    configuration = yaml.load(file, Loader=yaml.FullLoader)
+# with open("../data/config.yaml") as file:
+#     configuration = yaml.load(file, Loader=yaml.FullLoader)
 
-test = Hefesto.transform_shape(path_datainput ="../data/exemplarCDEdata3.csv", configuration=configuration)
-test.to_csv ("../data/result.csv", index = False, header=True)
+# test = Hefesto.transform_shape(path_datainput ="../data/exemplarCDEdata.csv", configuration=configuration)
+# test.to_csv ("../data/result.csv", index = False, header=True)
