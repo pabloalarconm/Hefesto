@@ -31,7 +31,7 @@ class Hefesto:
                 # Create a unique stamp per new row to about them to colapse:
                 milisec_point = milisec()
 
-                row_df.update({milisec_point: {'model':config[0]}})
+                row_df.update({milisec_point: {'model':config[1]["cde"]}})
                 
                 # Add YAML template static information
                 for cde in temp.items():
@@ -64,8 +64,8 @@ class Hefesto:
         return resulting_df
 
 # # Test
-# with open("../data/config.yaml") as file:
+# with open("../data/new_config.yaml") as file:
 #     configuration = yaml.load(file, Loader=yaml.FullLoader)
 
 # test = Hefesto.transform_shape(path_datainput ="../data/exemplarCDEdata.csv", configuration=configuration)
-# test.to_csv ("../data/result.csv", index = False, header=True)
+# test.to_csv ("../data/result2.csv", index = False, header=True)
