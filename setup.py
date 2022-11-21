@@ -8,7 +8,7 @@ from setuptools import setup
 
 setup(
     name="Hefesto",
-    version="0.1.7",
+    version="0.1.9",
     packages=["Hefesto"],
     author="Pablo Alarcón Moreno",
     author_email="pabloalarconmoreno@gmail.com",

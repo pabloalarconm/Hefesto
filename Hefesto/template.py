@@ -8,12 +8,12 @@ class Template:
     outputURI = "http://www.ebi.ac.uk/efo/EFO_0006921",
     attributeURI = "http://purl.obolibrary.org/obo/NCIT_C68615",
     valueAttributeIRI = None,
-    valueOutput = None,
+    value = None,
     datatype = "xsd:date",
     startdate = None,
     enddate = None,
     pid = None,
-    chronoid = None
+    context_id = None
   ),
 
 
@@ -22,12 +22,12 @@ class Template:
     outputURI = "http://purl.obolibrary.org/obo/NCIT_C103159",
     attributeURI = "http://purl.obolibrary.org/obo/NCIT_C28421",
     valueAttributeIRI = None,
-    valueOutput = None,
+    value = None,
     datatype = "xsd:string",
     startdate = None,
     enddate = None,
     pid = None,
-    chronoid = None
+    context_id = None
   ),
 
 
@@ -36,12 +36,12 @@ class Template:
     outputURI= "http://purl.obolibrary.org/obo/NCIT_C103159",
     attributeURI= "http://purl.obolibrary.org/obo/NCIT_C166244",
     valueAttributeIRI = None,
-    valueOutput = None,
+    value = None,
     datatype = "xsd:string",
     startdate = None,
     enddate = None,
     pid = None,
-    chronoid = None
+    context_id = None
   ),
 
   Date_of_death = dict( 
@@ -49,12 +49,12 @@ class Template:
     outputURI= "http://purl.obolibrary.org/obo/NCIT_C103159",
     attributeURI= "http://purl.obolibrary.org/obo/NCIT_C70810",
     valueAttributeIRI = None,
-    valueOutput = None,
+    value = None,
     datatype = "xsd:date",
     startdate = None,
     enddate = None,
     pid = None,
-    chronoid = None
+    context_id = None
   ),
 
   Care_pathway = dict(
@@ -62,12 +62,12 @@ class Template:
     outputURI= "http://purl.obolibrary.org/obo/NCIT_C25716",
     attributeURI= "http://purl.obolibrary.org/obo/NCIT_C164021",
     valueAttributeIRI = None,
-    valueOutput = None,
+    value = None,
     datatype = "xsd:date",
     startdate = None,
     enddate = None,
     pid = None,
-    chronoid = None
+    context_id = None
   ),
 
   Diagnosis = dict(
@@ -75,12 +75,12 @@ class Template:
     outputURI= "http://purl.obolibrary.org/obo/NCIT_C103159",
     attributeURI= "http://purl.obolibrary.org/obo/NCIT_C2991",
     valueAttributeIRI = None,
-    valueOutput = None,
+    value = None,
     datatype = "xsd:string",
     startdate = None,
     enddate = None,
     pid = None,
-    chronoid = None
+    context_id = None
   ),
 
   Date_of_diagnosis = dict(
@@ -88,12 +88,12 @@ class Template:
     outputURI = None,
     attributeURI= "http://purl.obolibrary.org/obo/NCIT_C156420",
     valueAttributeIRI = None,
-    valueOutput = None,
+    value = None,
     datatype = "xsd:date",
     startdate = None,
     enddate = None,
     pid = None,
-    chronoid = None
+    context_id = None
   ),
 
   Date_of_symptoms = dict(
@@ -101,12 +101,12 @@ class Template:
     outputURI = None,
     attributeURI= "http://purl.obolibrary.org/obo/NCIT_C25279",
     valueAttributeIRI = None,
-    valueOutput = None,
+    value = None,
     datatype = "xsd:date",
     startdate = None,
     enddate = None,
     pid = None,
-    chronoid = None
+    context_id = None
   ),
 
   Phenotype = dict(
@@ -114,12 +114,12 @@ class Template:
     outputURI= "http://purl.obolibrary.org/obo/NCIT_C125204",
     attributeURI= "http://semanticscience.org/resource/SIO_010056",
     valueAttributeIRI = None,
-    valueOutput = None,
+    value = None,
     datatype = "xsd:date",
     startdate = None,
     enddate = None,
     pid = None,
-    chronoid = None
+    context_id = None
   ),
 
   Genotype = dict(
@@ -127,12 +127,12 @@ class Template:
     outputURI= "http://purl.obolibrary.org/obo/NCIT_C17248",
     attributeURI= None,
     valueAttributeIRI = None,
-    valueOutput = None,
+    value = None,
     datatype = "xsd:string",
     startdate = None,
     enddate = None,
     pid = None,
-    chronoid = None
+    context_id = None
   ),
 
   Genotype_OMIM = dict(
@@ -140,12 +140,12 @@ class Template:
     outputURI= "http://purl.obolibrary.org/obo/NCIT_C17248",
     attributeURI= "http://edamontology.org/data_1153",
     valueAttributeIRI = None,
-    valueOutput = None,
+    value = None,
     datatype = "xsd:string",
     startdate = None,
     enddate = None,
     pid = None,
-    chronoid = None
+    context_id = None
   ),
 
   Genotype_HGNC = dict(
@@ -153,12 +153,12 @@ class Template:
     outputURI= "http://purl.obolibrary.org/obo/NCIT_C17248",
     attributeURI= "http://edamontology.org/data_2295",
     valueAttributeIRI = None,
-    valueOutput = None,
+    value = None,
     datatype = "xsd:string",
     startdate = None,
     enddate = None,
     pid = None,
-    chronoid = None
+    context_id = None
   ),
 
   Consent = dict(
@@ -166,12 +166,12 @@ class Template:
     outputURI = None,
     attributeURI= "http://purl.obolibrary.org/obo/NCIT_C25460",
     valueAttributeIRI = None,
-    valueOutput = None,
+    value = None,
     datatype = "xsd:string",
     startdate = None,
     enddate = None,
     pid = None,
-    chronoid = None
+    context_id = None
   ),
 
   Biobank = dict(
@@ -179,12 +179,12 @@ class Template:
     outputURI= "http://purl.obolibrary.org/obo/NCIT_C115570",
     attributeURI= "http://purl.obolibrary.org/obo/NCIT_C25429",
     valueAttributeIRI = None,
-    valueOutput = None,
+    value = None,
     datatype = "xsd:string",
     startdate = None,
     enddate = None,
     pid = None,
-    chronoid = None
+    context_id = None
   ),
 
   Disability = dict(
@@ -192,12 +192,12 @@ class Template:
     outputURI= "http://purl.obolibrary.org/obo/NCIT_C25338",
     attributeURI= "http://purl.obolibrary.org/obo/NCIT_C21007",
     valueAttributeIRI = None,
-    valueOutput = None,
+    value = None,
     datatype = "xsd:float",
     startdate = None,
     enddate = None,
     pid = None,
-    chronoid = None
+    context_id = None
   )
   )
 

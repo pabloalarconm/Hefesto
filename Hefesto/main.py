@@ -1,12 +1,25 @@
 import pandas as pd
 from pyperseo.functions import milisec as milisec
-from Hefesto.template import Template
+from template import Template
 import sys
 import yaml
+import math
+import requests
 
-class Hefesto:
+class Hefesto():
 
-    def transform_shape(path_datainput,configuration):
+    def __init__(self, datainput, reset = False):
+        # Create an object as dictonary to reduce duplicate calls:
+        self.reg = dict()
+
+        # Import data input:
+        if not reset:
+            self.df_data = pd.read_csv(datainput)
+        else:
+            self.df_data = datainput
+            return self.df_data
+
+    def transform_shape(self,configuration, uniqid_generation= True, contextid_generation= True, clean_blanks= True):
 
         if type(configuration) is not dict:
             sys.exit("configuration file must be a dictionary from a Python, YAML or JSON file")
@@ -14,9 +27,6 @@ class Hefesto:
         
         # Import static template for all CDE terms:
         temp = Template.template_model
-
-        # Import data input:
-        df_data = pd.read_csv(path_datainput)
         
         # Empty objects:
         resulting_df = pd.DataFrame()
@@ -24,7 +34,7 @@ class Hefesto:
 
         # Iterate each row from data input
         # check each YAML object from configuration file to set the parameters
-        for row in df_data.iterrows():
+        for row in self.df_data.iterrows():
 
             for config in configuration.items():
 
@@ -45,27 +55,121 @@ class Hefesto:
                             dict_element = {element[0]:row[1][r]}
                             row_df[milisec_point].update(dict_element)
 
-                # Delete all "empty" row that doesnt contain valueOutput or nan
-                if row_df[milisec_point]["valueOutput"] == None or type(row_df[milisec_point]["valueOutput"]) == float:
-                    del row_df[milisec_point]
+                # Delete all "empty" row from Value columns that doesnt contain value or nan
 
+                if clean_blanks:
+                    if row_df[milisec_point]["value"] == None:
+                        del row_df[milisec_point]
+
+                    elif type(row_df[milisec_point]["value"]) == float:
+
+                        if math.isnan(row_df[milisec_point]["value"]):
+                            del row_df[milisec_point]
+
+                        else:
+                            final_row_df = pd.DataFrame(row_df[milisec_point], index=[1])
+                            resulting_df = pd.concat([resulting_df, final_row_df])
+                    else:
+                        # Add new dict with extracted information into a Data frame
+                        final_row_df = pd.DataFrame(row_df[milisec_point], index=[1])
+                        resulting_df = pd.concat([resulting_df, final_row_df])
                 else:
-                    # Add new dict with extracted information into a Data frame
                     final_row_df = pd.DataFrame(row_df[milisec_point], index=[1])
                     resulting_df = pd.concat([resulting_df, final_row_df])
 
         # uniqid (re)generation:
         resulting_df = resulting_df.reset_index(drop=True)
 
-        resulting_df['uniqid'] = ""
-        for i in resulting_df.index:
-            resulting_df.at[i, "uniqid"] = milisec()
+        if uniqid_generation:
+            resulting_df['uniqid'] = ""
+            for i in resulting_df.index:
+                resulting_df.at[i, "uniqid"] = milisec()
 
-        return resulting_df
+        # context_id (re)generation:
+        if contextid_generation:
+            resulting_df['context_id'] = ""
+            for i in resulting_df.index:
+                resulting_df.at[i, "context_id"] = milisec()
 
+        
+        print("Structural transformation: Done")
+        new = Hefesto.__init__(self, datainput= resulting_df, reset = True)
+        return new
+
+    # def get_uri(self, col, ont):
+
+    #     # Column duplication to work in new column:
+    #     self.df_data[col+"_uri"] = self.df_data.loc[:, col]
+
+    #     # Loop throught new column to replace current value with API term:
+    #     for i in self.df_data[col+"_uri"].index:
+    #         term = self.df_data.at[i,col+"_uri"]
+    #         if term in self.reg:
+    #             self.df_data.at[i,col+"_uri"] = self.reg[term] 
+
+    #         else: # API call to OLS
+    #             url= "http://www.ebi.ac.uk/ols/api/search?q="+ term +"&ontology=" + ont
+    #             r = requests.get(url,headers= {"accept":"application/json"})
+    #             data = r.json()
+    #             # JSON navigation:
+    #             data_iri = data["response"]["docs"][0]["iri"]
+    #             # Attach new value to the Dataframe:
+    #             self.reg[term] = data_iri
+    #             self.df_data.at[i,col+"_uri"] = data_iri 
+
+    #     print("URLs from Label calling: Done")
+    #     new = Hefesto.__init__(self, datainput= self.df_data, reset = True)
+    #     return new
+
+
+
+    def get_label(self, col):
+
+        # Column duplication to work in new column:
+        self.df_data[col+"_label"] = self.df_data.loc[:, col]
+
+        # Loop throught new column to replace current value with API term:
+        for i in self.df_data[col+"_label"].index:
+            term = self.df_data.at[i,col+"_label"]
+            if term in self.reg:
+                self.df_data.at[i,col+"_label"] = self.reg[term] 
+
+            else: # API call to OLS
+                url= 'http://www.ebi.ac.uk/ols/api/terms?iri='+ term
+                r = requests.get(url,headers= {"accept":"application/json"}) # API call to OLS
+                data = r.json()
+                # JSON navigation:
+                data_label = data["_embedded"]["terms"][0]["label"]
+                # Attach new value to the Dataframe:
+                self.reg[term] = data_label
+                self.df_data.at[i,col+"_label"] = data_label 
+
+        print("Labels from URL calling: Done")
+        new = Hefesto.__init__(self, datainput= self.df_data, reset = True)
+        return new
+
+    
+    def replacement(self, col, key, value, duplicate):
+
+        if duplicate == "True":
+            # Column duplication to work in new column:
+            self.df_data[col+"_dup"] = self.df_data.loc[:, col]
+            self.df_data[col+"_dup"] = self.df_data[col+"_dup"].replace([key],value)
+        else:
+            self.df_data[col] = self.df_data[col].replace([key],value) 
+
+        print("Replacement from " + key + "to "+ value + " at column " + col +": Done")
+        new = Hefesto.__init__(self, datainput= self.df_data, reset = True)
+        return new
+        
 # # Test
-# with open("../data/new_config.yaml") as file:
+# with open("../data/CDEconfig.yaml") as file:
 #     configuration = yaml.load(file, Loader=yaml.FullLoader)
 
-# test = Hefesto.transform_shape(path_datainput ="../data/exemplarCDEdata.csv", configuration=configuration)
-# test.to_csv ("../data/result2.csv", index = False, header=True)
+# test = Hefesto(datainput = "../data/OFFICIAL_DATA_INPUT.csv")
+# transform = test.transform_shape(configuration=configuration)
+# label = test.get_label("outputURI")
+# # url_from_label= test.get_uri("outputURI_label","obo")
+# repl= test.replacement("outputURI_label", "Date","DateXXX", duplicate=False)
+
+# repl.to_csv ("../data/result6.csv", index = False, header=True)
