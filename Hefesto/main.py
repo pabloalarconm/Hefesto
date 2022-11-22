@@ -96,30 +96,38 @@ class Hefesto():
         new = Hefesto.__init__(self, datainput= resulting_df, reset = True)
         return new
 
-    # def get_uri(self, col, ont):
+    def get_uri(self, col, ont):
 
-    #     # Column duplication to work in new column:
-    #     self.df_data[col+"_uri"] = self.df_data.loc[:, col]
+        
+        if not col in list(self.df_data.columns):
+            sys.exit("ERROR: selected column doesnt exist")
 
-    #     # Loop throught new column to replace current value with API term:
-    #     for i in self.df_data[col+"_uri"].index:
-    #         term = self.df_data.at[i,col+"_uri"]
-    #         if term in self.reg:
-    #             self.df_data.at[i,col+"_uri"] = self.reg[term] 
+        # Column duplication to work in new column:
+        self.df_data[col+"_uri"] = self.df_data.loc[:, col]
+        
 
-    #         else: # API call to OLS
-    #             url= "http://www.ebi.ac.uk/ols/api/search?q="+ term +"&ontology=" + ont
-    #             r = requests.get(url,headers= {"accept":"application/json"})
-    #             data = r.json()
-    #             # JSON navigation:
-    #             data_iri = data["response"]["docs"][0]["iri"]
-    #             # Attach new value to the Dataframe:
-    #             self.reg[term] = data_iri
-    #             self.df_data.at[i,col+"_uri"] = data_iri 
+        # Loop throught new column to replace current value with API term:
+        for i in self.df_data[col+"_uri"].index:
+            term = self.df_data.at[i,col+"_uri"]
+            if term in self.reg:
+                self.df_data.at[i,col+"_uri"] = self.reg[term] 
 
-    #     print("URLs from Label calling: Done")
-    #     new = Hefesto.__init__(self, datainput= self.df_data, reset = True)
-    #     return new
+            else: # API call to OLS
+                url= "http://www.ebi.ac.uk/ols/api/search?q="+ term +"&ontology=" + ont
+                r = requests.get(url,headers= {"accept":"application/json"})
+                data = r.json()
+                # JSON navigation:
+                try:
+                    data_iri = data["response"]["docs"][0]["iri"]
+                except IndexError:
+                    data_iri = "NOT MATCH"
+                # Attach new value to the Dataframe:
+                self.reg[term] = data_iri
+                self.df_data.at[i,col+"_uri"] = data_iri 
+
+        print("URLs from Label calling: Done")
+        new = Hefesto.__init__(self, datainput= self.df_data, reset = True)
+        return new
 
 
 
@@ -139,7 +147,10 @@ class Hefesto():
                 r = requests.get(url,headers= {"accept":"application/json"}) # API call to OLS
                 data = r.json()
                 # JSON navigation:
-                data_label = data["_embedded"]["terms"][0]["label"]
+                try:
+                    data_label = data["_embedded"]["terms"][0]["label"]
+                except TypeError:
+                    data_label = "NOT MATCH"
                 # Attach new value to the Dataframe:
                 self.reg[term] = data_label
                 self.df_data.at[i,col+"_label"] = data_label 
@@ -149,7 +160,7 @@ class Hefesto():
         return new
 
     
-    def replacement(self, col, key, value, duplicate):
+    def replacement(self, col, key, value, duplicate = False):
 
         if duplicate == "True":
             # Column duplication to work in new column:
@@ -169,7 +180,6 @@ class Hefesto():
 # test = Hefesto(datainput = "../data/OFFICIAL_DATA_INPUT.csv")
 # transform = test.transform_shape(configuration=configuration)
 # label = test.get_label("outputURI")
-# # url_from_label= test.get_uri("outputURI_label","obo")
+# url_from_label= test.get_uri("outputURI_label","ncit")
 # repl= test.replacement("outputURI_label", "Date","DateXXX", duplicate=False)
-
-# repl.to_csv ("../data/result6.csv", index = False, header=True)
+# url_from_label.to_csv ("../data/result6.csv", index = False, header=True)
