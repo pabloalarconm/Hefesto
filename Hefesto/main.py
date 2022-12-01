@@ -1,6 +1,7 @@
 import pandas as pd
-from pyperseo.functions import milisec as milisec
-from template import Template
+from perseo.main import milisec
+# from template import Template
+from Hefesto.template import Template
 import sys
 import yaml
 import math
