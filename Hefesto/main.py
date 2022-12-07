@@ -59,12 +59,12 @@ class Hefesto():
                 # Delete all "empty" row from Value columns that doesnt contain value or nan
 
                 if clean_blanks:
-                    if row_df[milisec_point]["value"] == None:
+                    if row_df[milisec_point]["valueOutput"] == None:
                         del row_df[milisec_point]
 
-                    elif type(row_df[milisec_point]["value"]) == float:
+                    elif type(row_df[milisec_point]["valueOutput"]) == float:
 
-                        if math.isnan(row_df[milisec_point]["value"]):
+                        if math.isnan(row_df[milisec_point]["valueOutput"]):
                             del row_df[milisec_point]
 
                         else:
