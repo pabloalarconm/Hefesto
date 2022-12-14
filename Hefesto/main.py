@@ -57,27 +57,25 @@ class Hefesto():
                             row_df[milisec_point].update(dict_element)
 
                 # Delete all "empty" row from Value columns that doesnt contain value or nan
+                print(row_df[milisec_point]["valueOutput"])
+                if not clean_blanks:
+                    final_row_df = pd.DataFrame(row_df[milisec_point], index=[1])
+                    resulting_df = pd.concat([resulting_df, final_row_df])
 
-                if clean_blanks:
+                else:
                     if row_df[milisec_point]["valueOutput"] == None:
                         del row_df[milisec_point]
 
                     elif type(row_df[milisec_point]["valueOutput"]) == float:
-
                         if math.isnan(row_df[milisec_point]["valueOutput"]):
                             del row_df[milisec_point]
-
                         else:
                             final_row_df = pd.DataFrame(row_df[milisec_point], index=[1])
                             resulting_df = pd.concat([resulting_df, final_row_df])
                     else:
-                        # Add new dict with extracted information into a Data frame
                         final_row_df = pd.DataFrame(row_df[milisec_point], index=[1])
                         resulting_df = pd.concat([resulting_df, final_row_df])
-                else:
-                    final_row_df = pd.DataFrame(row_df[milisec_point], index=[1])
-                    resulting_df = pd.concat([resulting_df, final_row_df])
-
+                    
         # uniqid (re)generation:
         resulting_df = resulting_df.reset_index(drop=True)
 
@@ -179,8 +177,8 @@ class Hefesto():
 #     configuration = yaml.load(file, Loader=yaml.FullLoader)
 
 # test = Hefesto(datainput = "../data/OFFICIAL_DATA_INPUT.csv")
-# transform = test.transform_shape(configuration=configuration)
+# transform = test.transform_shape(configuration=configuration) #, clean_blanks=False
 # label = test.get_label("outputURI")
 # url_from_label= test.get_uri("outputURI_label","ncit")
 # repl= test.replacement("outputURI_label", "Date","DateXXX", duplicate=False)
-# url_from_label.to_csv ("../data/result6.csv", index = False, header=True)
+# transform.to_csv ("../data/result6.csv", index = False, header=True)
