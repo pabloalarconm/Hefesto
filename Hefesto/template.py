@@ -9,6 +9,7 @@ class Template:
       attributeURI = "http://purl.obolibrary.org/obo/NCIT_C68615",
       valueAttributeIRI = None,
       valueOutput= None,
+      valueOutput_date = None,
       datatype = "xsd:date",
       startdate = None,
       enddate = None,
@@ -23,6 +24,7 @@ class Template:
       attributeURI = "http://purl.obolibrary.org/obo/NCIT_C28421",
       valueAttributeIRI = None,
       valueOutput= None,
+      valueOutput_string= None,
       datatype = "xsd:string",
       startdate = None,
       enddate = None,
@@ -37,6 +39,7 @@ class Template:
       attributeURI= "http://purl.obolibrary.org/obo/NCIT_C166244",
       valueAttributeIRI = None,
       valueOutput= None,
+      valueOutput_string= None,
       datatype = "xsd:string",
       startdate = None,
       enddate = None,
@@ -50,6 +53,7 @@ class Template:
       attributeURI= "http://purl.obolibrary.org/obo/NCIT_C70810",
       valueAttributeIRI = None,
       valueOutput= None,
+      valueOutput_date= None,
       datatype = "xsd:date",
       startdate = None,
       enddate = None,
@@ -63,6 +67,7 @@ class Template:
       attributeURI= "http://purl.obolibrary.org/obo/NCIT_C164021",
       valueAttributeIRI = None,
       valueOutput= None,
+      valueOutput_date= None,
       datatype = "xsd:date",
       startdate = None,
       enddate = None,
@@ -76,6 +81,7 @@ class Template:
       attributeURI= "http://purl.obolibrary.org/obo/NCIT_C2991",
       valueAttributeIRI = None,
       valueOutput= None,
+      valueOutput_string= None,
       datatype = "xsd:string",
       startdate = None,
       enddate = None,
@@ -83,12 +89,13 @@ class Template:
       context_id = None
     ),
 
-    Date_of_diagnosis = dict(
+    Onset_diagnosis = dict(
       processURI= "http://purl.obolibrary.org/obo/NCIT_C142470",
-      outputURI = None,
+      outputURI = "http://purl.obolibrary.org/obo/NCIT_C103159",
       attributeURI= "http://purl.obolibrary.org/obo/NCIT_C156420",
       valueAttributeIRI = None,
       valueOutput= None,
+      valueOutput_date= None,
       datatype = "xsd:date",
       startdate = None,
       enddate = None,
@@ -96,12 +103,13 @@ class Template:
       context_id = None
     ),
 
-    Date_of_symptoms = dict(
+    Onset_symptoms = dict(
       processURI= "http://purl.obolibrary.org/obo/NCIT_C142470",
-      outputURI = None,
-      attributeURI= "http://purl.obolibrary.org/obo/NCIT_C25279",
+      outputURI = "http://purl.obolibrary.org/obo/NCIT_C103159",
+      attributeURI= "http://purl.obolibrary.org/obo/NCIT_C124353",
       valueAttributeIRI = None,
       valueOutput= None,
+      valueOutput_date= None,
       datatype = "xsd:date",
       startdate = None,
       enddate = None,
@@ -115,6 +123,7 @@ class Template:
       attributeURI= "http://semanticscience.org/resource/SIO_010056",
       valueAttributeIRI = None,
       valueOutput= None,
+      valueOutput_string= None,
       datatype = "xsd:date",
       startdate = None,
       enddate = None,
@@ -122,12 +131,13 @@ class Template:
       context_id = None
     ),
 
-    Genotype = dict(
+    Genotype_HGVS = dict(
       processURI= "http://purl.obolibrary.org/obo/NCIT_C15709",
       outputURI= "http://purl.obolibrary.org/obo/NCIT_C17248",
-      attributeURI= None,
+      attributeURI= "http://edamontology.org/data_2127",
       valueAttributeIRI = None,
       valueOutput= None,
+      valueOutput_string= None,
       datatype = "xsd:string",
       startdate = None,
       enddate = None,
@@ -137,10 +147,11 @@ class Template:
 
     Genotype_OMIM = dict(
       processURI= "http://purl.obolibrary.org/obo/NCIT_C15709",
-      outputURI= "http://purl.obolibrary.org/obo/NCIT_C17248",
+      outputURI= "http://purl.obolibrary.org/obo/NCIT_C16612",
       attributeURI= "http://edamontology.org/data_1153",
       valueAttributeIRI = None,
       valueOutput= None,
+      valueOutput_string= None,
       datatype = "xsd:string",
       startdate = None,
       enddate = None,
@@ -150,10 +161,11 @@ class Template:
 
     Genotype_HGNC = dict(
       processURI= "http://purl.obolibrary.org/obo/NCIT_C15709",
-      outputURI= "http://purl.obolibrary.org/obo/NCIT_C17248",
-      attributeURI= "http://edamontology.org/data_2295",
+      outputURI= "http://purl.obolibrary.org/obo/NCIT_C16612",
+      attributeURI= "http://edamontology.org/data_2298",
       valueAttributeIRI = None,
       valueOutput= None,
+      valueOutput_string= None,
       datatype = "xsd:string",
       startdate = None,
       enddate = None,
@@ -167,6 +179,7 @@ class Template:
       attributeURI= "http://purl.obolibrary.org/obo/NCIT_C25460",
       valueAttributeIRI = None,
       valueOutput= None,
+      valueOutput_string= None,
       datatype = "xsd:string",
       startdate = None,
       enddate = None,
@@ -180,6 +193,7 @@ class Template:
       attributeURI= "http://purl.obolibrary.org/obo/NCIT_C25429",
       valueAttributeIRI = None,
       valueOutput= None,
+      valueOutput_string= None,
       datatype = "xsd:string",
       startdate = None,
       enddate = None,
@@ -193,6 +207,7 @@ class Template:
       attributeURI= "http://purl.obolibrary.org/obo/NCIT_C21007",
       valueAttributeIRI = None,
       valueOutput= None,
+      valueOutput_float= None,
       datatype = "xsd:float",
       startdate = None,
       enddate = None,

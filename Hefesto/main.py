@@ -172,13 +172,13 @@ class Hefesto():
         new = Hefesto.__init__(self, datainput= self.df_data, reset = True)
         return new
         
-# # Test
-# with open("../data/CDEconfig.yaml") as file:
-#     configuration = yaml.load(file, Loader=yaml.FullLoader)
+# Test
+with open("../data/CDEconfig.yaml") as file:
+    configuration = yaml.load(file, Loader=yaml.FullLoader)
 
-# test = Hefesto(datainput = "../data/OFFICIAL_DATA_INPUT.csv")
-# transform = test.transform_shape(configuration=configuration) #, clean_blanks=False
+test = Hefesto(datainput = "../data/OFFICIAL_DATA_INPUT.csv")
+transform = test.transform_shape(configuration=configuration) #, clean_blanks=False
 # label = test.get_label("outputURI")
 # url_from_label= test.get_uri("outputURI_label","ncit")
 # repl= test.replacement("outputURI_label", "Date","DateXXX", duplicate=False)
-# transform.to_csv ("../data/result6.csv", index = False, header=True)
+transform.to_csv ("../data/result6.csv", index = False, header=True)

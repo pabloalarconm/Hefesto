@@ -2,7 +2,7 @@ Birth_date:
   cde: Birthdate
   columns:
     pid: pat_id
-    valueOutput: birthdate
+    valueOutput_date: birthdate
     startdate: first_visit_date
     enddate: first_visit_date
 
@@ -11,16 +11,16 @@ Sex:
   columns:
     pid: pat_id
     valueAttributeIRI: sex_uri
-    valueOutput: sex
+    valueOutput_string: sex
     startdate: first_visit_date
     enddate: first_visit_date
 
-# Patient_status:
-#   cde: Patient_status
+# Status:
+#   cde: Status
 #   columns:
 #     pid: pat_id
-#     value status_label
-#     valueAttributeIRI: status
+#     valueOutput: status_label
+#     valueAttributeIRI: status_uri
 #     startdate: status_datetime
 #     enddate: status_datetime
 
@@ -28,91 +28,116 @@ Sex:
 #   cde: Date_of_death
 #   columns:
 #     pid: pat_id
-#     value death_datetime
-#     startdate: death_datetime
-#     enddate: death_datetime
+#     valueOutput: death_date
+#     startdate: death_date
+#     enddate: death_date
 
-Care_pathway:
-  cde: Care_pathway
-  columns:
-    pid: pat_id
-    valueOutput: first_visit_date
-    startdate: first_visit_date
-    enddate: first_visit_date
+# Care_pathway:
+#   cde: Care_pathway
+#   columns:
+#     pid: pat_id
+#     valueOutput: first_visit_date
+#     startdate: first_visit_date
+#     enddate: first_visit_date
 
-Diagnosis:
-  cde: Diagnosis
-  columns:
-    pid: pat_id
-    valueAttributeIRI: diagnosis
-    valueOutput: diagnosis_label
-    startdate: diagnosis_date
-    enddate: diagnosis_date
+# Diagnosis:
+#   cde: Diagnosis
+#   columns:
+#     pid: pat_id
+#     valueAttributeIRI: diagnosis
+#     valueOutput: diagnosis_label
+#     startdate: diagnosis_date
+#     enddate: diagnosis_date
 
-Date_of_diagnosis:
-  cde: Date_of_diagnosis
-  columns:
-    pid: pat_id
-    valueOutput: diagnosis_date
-    outputURI: onset_diagnosis
-    startdate: diagnosis_date
-    enddate: diagnosis_date
+# Onset_diagnosis:
+#   cde: Onset_diagnosis
+#   columns:
+#     pid: pat_id
+#     valueOutput: diagnosis_date
+#     valueAttributeIRI: onset_diagnosis
+#     startdate: diagnosis_date
+#     enddate: diagnosis_date
 
-Onset_of_symptoms:
-  cde: Date_of_symptoms
-  columns:
-    pid: pat_id
-    outputURI: onset_symptom
-    valueOutput: first_symptoms_date
-    startdate: first_visit_date
-    enddate: first_visit_date
+# Onset_symptoms:
+#   cde: Onset_symptoms
+#   columns:
+#     pid: pat_id
+#     valueAttributeIRI: onset_symptom
+#     valueOutput: first_symptoms_date
+#     startdate: first_visit_date
+#     enddate: first_visit_date
 
-Genotype:
-  cde: Genotype
-  columns:
-    pid: pat_id
-    valueOutput: hgvs_code
-    valueAttributeIRI: omim_code
-    attributeURI: gen_type
-    startdate: genetic_datetime
-    enddate: genetic_datetime
+# Genotype_HGVS:
+#   cde: Genotype_HGVS
+#   columns:
+#     pid: pat_id
+#     valueOutput: hgvs_code
+#     valueAttributeIRI: hgvs_id
+#     startdate: first_visit_date
+#     enddate: first_visit_date
 
+# Genotype_HGNC:
+#   cde: Genotype_HGNC
+#   columns:
+#     pid: pat_id
+#     valueOutput: hgnc_code
+#     valueAttributeIRI: hgnc_id
+#     startdate: first_visit_date
+#     enddate: first_visit_date
 
-Phenotype_vasculitis:
-  cde: Phenotype
-  columns:
-    pid: pat_id
-    valueAttributeIRI: dia_ce_sle_vasculitis_uri
-    valueOutput: dia_ce_sle_vasculitis
-    startdate: first_visit_date
-    enddate: first_visit_date
-
-
-Consent_clinical:
-  cde: Consent
-  columns:
-    pid: pat_id
-    valueOutput: consent_clinical
-    outputURI: consent_clinical_uri
-    startdate: informed_consent_date
-    enddate: informed_consent_date
+# Genotype_OMIM:
+#   cde: Genotype_OMIM
+#   columns:
+#     pid: pat_id
+#     valueOutput: omim_code
+#     valueAttributeIRI: omim_id
+#     startdate: first_visit_date
+#     enddate: first_visit_date
 
 
-Consent_research:
-  cde: Consent
-  columns:
-    pid: pat_id
-    valueOutput: consent_research
-    outputURI: consent_research_uri
-    startdate: informed_consent_date
-    enddate: informed_consent_date
+# Phenotype:
+#   cde: Phenotype
+#   columns:
+#     pid: pat_id
+#     valueAttributeIRI: dia_ce_sle_vasculitis_uri
+#     valueOutput: dia_ce_sle_vasculitis
+#     startdate: first_visit_date
+#     enddate: first_visit_date
 
 
-Disability:
-  cde: Disability
-  columns:
-    pid: pat_id
-    valueOutput: disability_score
-    processURI : disability_type
-    startdate: disability_datetime
-    enddate: disability_datetime
+# Consent_clinical:
+#   cde: Consent
+#   columns:
+#     pid: pat_id
+#     valueOutput: consent_clinical
+#     outputURI: consent_clinical_uri
+#     startdate: informed_consent_date
+#     enddate: informed_consent_date
+
+
+# Consent_research:
+#   cde: Consent
+#   columns:
+#     pid: pat_id
+#     valueOutput: consent_research
+#     outputURI: consent_research_uri
+#     startdate: informed_consent_date
+#     enddate: informed_consent_date
+
+
+# Disability:
+#   cde: Disability
+#   columns:
+#     pid: pat_id
+#     valueOutput: disability_score
+#     processURI : disability_type
+#     startdate: disability_datetime
+#     enddate: disability_datetime
+
+# Biobank:
+#   cde: Biobank
+#   columns:
+#     pid: pat_id
+#     valueOutput: biobank_id
+#     startdate: informed_consent_date
+#     enddate: informed_consent_date
