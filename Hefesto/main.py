@@ -1,6 +1,6 @@
 import pandas as pd
 from perseo.main import milisec
-# from template import Template
+#from template import Template
 from Hefesto.template import Template
 import sys
 import yaml
@@ -20,7 +20,7 @@ class Hefesto():
             self.df_data = datainput
             return self.df_data
 
-    def transform_shape(self,configuration, uniqid_generation= True, contextid_generation= True, clean_blanks= True):
+    def transform_shape(self,configuration, uniqid_generation= True, contextid_generation= True, clean_blanks= False):
 
         if type(configuration) is not dict:
             sys.exit("configuration file must be a dictionary from a Python, YAML or JSON file")
@@ -56,25 +56,24 @@ class Hefesto():
                             dict_element = {element[0]:row[1][r]}
                             row_df[milisec_point].update(dict_element)
 
-                # Delete all "empty" row from Value columns that doesnt contain value or nan
-                print(row_df[milisec_point]["valueOutput"])
-                if not clean_blanks:
-                    final_row_df = pd.DataFrame(row_df[milisec_point], index=[1])
-                    resulting_df = pd.concat([resulting_df, final_row_df])
+                # Store formed element into the final table:
+                final_row_df = pd.DataFrame(row_df[milisec_point], index=[1])
+                resulting_df = pd.concat([resulting_df, final_row_df])
 
-                else:
-                    if row_df[milisec_point]["valueOutput"] == None:
-                        del row_df[milisec_point]
+        # Reset Dataframe index
+        resulting_df = resulting_df.reset_index(drop=True)
 
-                    elif type(row_df[milisec_point]["valueOutput"]) == float:
-                        if math.isnan(row_df[milisec_point]["valueOutput"]):
-                            del row_df[milisec_point]
-                        else:
-                            final_row_df = pd.DataFrame(row_df[milisec_point], index=[1])
-                            resulting_df = pd.concat([resulting_df, final_row_df])
-                    else:
-                        final_row_df = pd.DataFrame(row_df[milisec_point], index=[1])
-                        resulting_df = pd.concat([resulting_df, final_row_df])
+        if clean_blanks:
+            # Replace all nan to None to easier removal
+            resulting_df = resulting_df.where(pd.notnull(resulting_df), None)
+
+            # Empty value row removal
+            for row_final in resulting_df.iterrows():
+                if row_final[1]["valueOutput_date"] == None and row_final[1]["valueOutput_string"] == None and row_final[1]["valueOutput_float"] == None:
+                    resulting_df = resulting_df.drop(row_final[0])
+
+            # Reset Dataframe index again
+            resulting_df = resulting_df.reset_index(drop=True)
                     
         # uniqid (re)generation:
         resulting_df = resulting_df.reset_index(drop=True)
@@ -172,13 +171,13 @@ class Hefesto():
         new = Hefesto.__init__(self, datainput= self.df_data, reset = True)
         return new
         
-# Test
-with open("../data/CDEconfig.yaml") as file:
-    configuration = yaml.load(file, Loader=yaml.FullLoader)
+# # Test
+# with open("../data/CDEconfig.yaml") as file:
+#     configuration = yaml.load(file, Loader=yaml.FullLoader)
 
-test = Hefesto(datainput = "../data/OFFICIAL_DATA_INPUT.csv")
-transform = test.transform_shape(configuration=configuration) #, clean_blanks=False
-# label = test.get_label("outputURI")
-# url_from_label= test.get_uri("outputURI_label","ncit")
-# repl= test.replacement("outputURI_label", "Date","DateXXX", duplicate=False)
-transform.to_csv ("../data/result6.csv", index = False, header=True)
+# test = Hefesto(datainput = "../data/OFFICIAL_DATA_INPUT.csv")
+# transform = test.transform_shape(configuration=configuration, clean_blanks = True) #, clean_blanks=False
+# # label = test.get_label("outputURI")
+# # url_from_label= test.get_uri("outputURI_label","ncit")
+# # repl= test.replacement("outputURI_label", "Date","DateXXX", duplicate=False)
+# transform.to_csv ("../data/result6.csv", index = False, header=True)
