@@ -1,7 +1,7 @@
 import pandas as pd
 from perseo.main import milisec
-#from template import Template
-from Hefesto.template import Template
+from template import Template
+# from Hefesto.template import Template
 import sys
 import yaml
 import math
@@ -19,6 +19,85 @@ class Hefesto():
         else:
             self.df_data = datainput
             return self.df_data
+
+    def transform_Fiab(self):
+
+    # Import static template for all CDE terms:
+        temp = Template.template_model
+
+    # Empty objects:
+        resulting_df = pd.DataFrame()
+        row_df = {}
+
+
+        for row in self.df_data.iterrows():
+            milisec_point = milisec()
+
+            # Tag each row with the new of the model 
+            new_row = {milisec_point : {"model": row[1]["model"]}}
+            row_df.update(new_row)
+
+            # Include columns related to ontological terms:
+            for cde in temp.items():
+                if cde[0] == row_df[milisec_point]["model"]:
+                    row_df[milisec_point].update(cde[1])
+
+            # Include columns from input CSV table:
+            row_df[milisec_point].update(dict(row[1]))
+
+            # Concate rows:
+            final_row_df = pd.DataFrame(row_df[milisec_point], index=[1])
+            resulting_df = pd.concat([resulting_df, final_row_df])
+        # Reset Index:    
+        resulting_df = resulting_df.reset_index(drop=True)
+        # Turn any nan to None:
+        resulting_df = resulting_df.where(pd.notnull(resulting_df), None)
+
+        # Delete columns without values:
+        for row_final in resulting_df.iterrows():
+            if row_final[1]["value"] == None and row_final[1]["valueIRI"] == None:
+                resulting_df = resulting_df.drop(row_final[0])
+
+        # Datatype:
+        datatype_relationship = {
+            "xsd:string":"valueOutput_string",
+            "xsd:date" : "valueOutput_date",
+            "xsd:float": "valueOutput_float",
+            "xsd:integer":"valueOutput_integer"
+        }
+
+        # Value edition:
+        for index, row in resulting_df.iterrows():
+            for k,v in datatype_relationship.items():
+
+                # value ---> value_Output_DATATYPE:
+                if row["value_datatype"] == k:
+                    resulting_df.at[index, v] = resulting_df["value"][index]
+
+                # valueIRI ---> processURI for Disability
+                if row["model"] == "Disability" and row["valueIRI"] != None:
+                    resulting_df.at[index, "processURI"] = resulting_df["valueIRI"][index]
+                    resulting_df["valueIRI"][index] = None
+
+                # enddate correction:
+                if row["startdate"] != None and row["enddate"] == None:
+                    resulting_df["enddate"][index] = resulting_df["startdate"][index]
+
+        del resulting_df["value"]
+
+
+        # valueIRI ---> valueAttributeIRI:
+        del resulting_df["valueAttributeIRI"]
+        resulting_df.rename(columns={'valueIRI':'valueAttributeIRI'}, inplace=True)
+
+        # uniqid generation:
+        resulting_df['uniqid'] = ""
+        for i in resulting_df.index:
+            resulting_df.at[i, "uniqid"] = milisec()
+
+        print("Structural transformation: Done")
+        new = Hefesto.__init__(self, datainput= resulting_df, reset = True)
+        return new
 
     def transform_shape(self,configuration, uniqid_generation= True, contextid_generation= True, clean_blanks= False):
 
@@ -171,11 +250,18 @@ class Hefesto():
         new = Hefesto.__init__(self, datainput= self.df_data, reset = True)
         return new
         
-# # Test
+
+# # Test 1:
+
+test = Hefesto(datainput = "../data/input.csv")
+transform = test.transform_Fiab()
+transform.to_csv ("../data/CDEresult_final.csv", index = False, header=True)
+
+# # Test 2
 # with open("../data/CDEconfig.yaml") as file:
 #     configuration = yaml.load(file, Loader=yaml.FullLoader)
 
-# test = Hefesto(datainput = "../data/OFFICIAL_DATA_INPUT.csv")
+# test = Hefesto(datainput = "../data/input2.csv")
 # transform = test.transform_shape(configuration=configuration, clean_blanks = True) #, clean_blanks=False
 # # label = test.get_label("outputURI")
 # # url_from_label= test.get_uri("outputURI_label","ncit")
