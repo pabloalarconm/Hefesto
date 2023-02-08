@@ -1,7 +1,7 @@
 import pandas as pd
 from perseo.main import milisec
-from template import Template
-# from Hefesto.template import Template
+# from template import Template
+from Hefesto.template import Template
 import sys
 import yaml
 import math
@@ -253,9 +253,9 @@ class Hefesto():
 
 # # Test 1:
 
-test = Hefesto(datainput = "../data/input.csv")
-transform = test.transform_Fiab()
-transform.to_csv ("../data/CDEresult_final.csv", index = False, header=True)
+# test = Hefesto(datainput = "../data/input.csv")
+# transform = test.transform_Fiab()
+# transform.to_csv ("../data/CDEresult_final.csv", index = False, header=True)
 
 # # Test 2
 # with open("../data/CDEconfig.yaml") as file:
