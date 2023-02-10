@@ -1,4 +1,6 @@
 PyYAML
 pyperseo
-pandas
-pyperseo
+pandas==1.2.4
+Hefesto
+rdflib
+requests
