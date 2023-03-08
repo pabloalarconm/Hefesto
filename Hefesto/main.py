@@ -1,7 +1,7 @@
 import pandas as pd
 from perseo.main import milisec
-# from template import Template
-from Hefesto.template import Template
+from template import Template
+# from Hefesto.template import Template
 import sys
 import yaml
 import math
@@ -16,6 +16,8 @@ class Hefesto():
         # Import data input:
         if not reset:
             self.df_data = pd.read_csv(datainput)
+            self.df_data = self.df_data.where(pd.notnull(self.df_data), None)
+
         else:
             self.df_data = datainput
             return self.df_data
@@ -41,29 +43,33 @@ class Hefesto():
             for cde in temp.items():
                 if cde[0] == row_df[milisec_point]["model"]:
                     row_df[milisec_point].update(cde[1])
+                    # print(row_df[milisec_point])
 
             # Include columns from input CSV table:
-            row_df[milisec_point].update(dict(row[1]))
+            for title, val in row[1].items():
+                if not val == None:
+                    row_df[milisec_point].update({title:val})
 
             # Concate rows:
             final_row_df = pd.DataFrame(row_df[milisec_point], index=[1])
             resulting_df = pd.concat([resulting_df, final_row_df])
+
         # Reset Index:    
         resulting_df = resulting_df.reset_index(drop=True)
         # Turn any nan to None:
         resulting_df = resulting_df.where(pd.notnull(resulting_df), None)
 
         # Delete columns without values:
-        for row_final in resulting_df.iterrows():
-            if row_final[1]["value"] == None and row_final[1]["valueIRI"] == None:
-                resulting_df = resulting_df.drop(row_final[0])
+        # for row_final in resulting_df.iterrows():
+        #     if row_final[1]["value"] == None and row_final[1]["valueIRI"] == None:
+        #         resulting_df = resulting_df.drop(row_final[0])
 
         # Datatype:
         datatype_relationship = {
-            "xsd:string":"valueOutput_string",
-            "xsd:date" : "valueOutput_date",
-            "xsd:float": "valueOutput_float",
-            "xsd:integer":"valueOutput_integer"
+            "xsd:string":"value_string",
+            "xsd:date" : "value_date",
+            "xsd:float": "value_float",
+            "xsd:integer":"value_integer"
         }
 
         # Value edition:
@@ -74,10 +80,10 @@ class Hefesto():
                 if row["value_datatype"] == k:
                     resulting_df.at[index, v] = resulting_df["value"][index]
 
-                # valueIRI ---> processURI for Disability
-                if row["model"] == "Disability" and row["valueIRI"] != None:
-                    resulting_df.at[index, "processURI"] = resulting_df["valueIRI"][index]
-                    resulting_df["valueIRI"][index] = None
+                # # valueIRI ---> process_type for Disability
+                # if row["model"] == "Disability" and row["valueIRI"] != None:
+                #     resulting_df.at[index, "process_type"] = resulting_df["valueIRI"][index]
+                #     resulting_df["valueIRI"][index] = None
 
                 # enddate correction:
                 if row["startdate"] != None and row["enddate"] == None:
@@ -86,9 +92,9 @@ class Hefesto():
         del resulting_df["value"]
 
 
-        # valueIRI ---> valueAttributeIRI:
-        del resulting_df["valueAttributeIRI"]
-        resulting_df.rename(columns={'valueIRI':'valueAttributeIRI'}, inplace=True)
+        # # valueIRI ---> valueAttributeIRI:
+        # del resulting_df["valueAttributeIRI"]
+        # resulting_df.rename(columns={'valueIRI':'valueAttributeIRI'}, inplace=True)
 
         # uniqid generation:
         resulting_df['uniqid'] = ""
@@ -251,11 +257,11 @@ class Hefesto():
         return new
         
 
-# # Test 1:
+# Test 1:
 
-# test = Hefesto(datainput = "../data/input.csv")
-# transform = test.transform_Fiab()
-# transform.to_csv ("../data/CDEresult_final.csv", index = False, header=True)
+test = Hefesto(datainput = "../data/NEWDATA.csv")
+transform = test.transform_Fiab()
+transform.to_csv ("../data/CDEresult_666.csv", index = False, header=True)
 
 # # Test 2
 # with open("../data/CDEconfig.yaml") as file:
@@ -263,7 +269,7 @@ class Hefesto():
 
 # test = Hefesto(datainput = "../data/input2.csv")
 # transform = test.transform_shape(configuration=configuration, clean_blanks = True) #, clean_blanks=False
-# # label = test.get_label("outputURI")
-# # url_from_label= test.get_uri("outputURI_label","ncit")
-# # repl= test.replacement("outputURI_label", "Date","DateXXX", duplicate=False)
+# # label = test.get_label("output_type")
+# # url_from_label= test.get_uri("output_type_label","ncit")
+# # repl= test.replacement("output_type_label", "Date","DateXXX", duplicate=False)
 # transform.to_csv ("../data/result6.csv", index = False, header=True)
