@@ -76,7 +76,7 @@ class Hefesto():
         for index, row in resulting_df.iterrows():
             for k,v in datatype_relationship.items():
 
-                # value ---> value_Output_DATATYPE:
+                # value ---> value_DATATYPE:
                 if row["value_datatype"] == k:
                     resulting_df.at[index, v] = resulting_df["value"][index]
 
@@ -145,34 +145,77 @@ class Hefesto():
                 final_row_df = pd.DataFrame(row_df[milisec_point], index=[1])
                 resulting_df = pd.concat([resulting_df, final_row_df])
 
-        # Reset Dataframe index
+        # Reset Index:    
         resulting_df = resulting_df.reset_index(drop=True)
+        # Turn any nan to None:
+        resulting_df = resulting_df.where(pd.notnull(resulting_df), None)
 
-        if clean_blanks:
-            # Replace all nan to None to easier removal
-            resulting_df = resulting_df.where(pd.notnull(resulting_df), None)
+        # Datatype:
+        datatype_relationship = {
+            "xsd:string":"value_string",
+            "xsd:date" : "value_date",
+            "xsd:float": "value_float",
+            "xsd:integer":"value_integer"
+        }
 
-            # Empty value row removal
-            for row_final in resulting_df.iterrows():
-                if row_final[1]["valueOutput_date"] == None and row_final[1]["valueOutput_string"] == None and row_final[1]["valueOutput_float"] == None:
-                    resulting_df = resulting_df.drop(row_final[0])
+        # Value edition:
+        for index, row in resulting_df.iterrows():
+            for k,v in datatype_relationship.items():
+                
 
-            # Reset Dataframe index again
-            resulting_df = resulting_df.reset_index(drop=True)
+                # value ---> value_DATATYPE:
+                if row["value_datatype"] == k:
+                    resulting_df.at[index, v] = resulting_df["value"][index]
+
+                # # valueIRI ---> process_type for Disability
+                # if row["model"] == "Disability" and row["valueIRI"] != None:
+                #     resulting_df.at[index, "process_type"] = resulting_df["valueIRI"][index]
+                #     resulting_df["valueIRI"][index] = None
+
+                # enddate correction:
+                if row["startdate"] != None and row["enddate"] == None:
+                    resulting_df["enddate"][index] = resulting_df["startdate"][index]
+
+
+        # clean blanks
+        for row_final in resulting_df.iterrows():
+            if row_final[1]["value"] == None and row_final[1]["attribute_id"] == None:
+                resulting_df = resulting_df.drop(row_final[0])
+                
+        del resulting_df["value"]
+
+
+        # # valueIRI ---> valueAttributeIRI:
+        # del resulting_df["valueAttributeIRI"]
+        # resulting_df.rename(columns={'valueIRI':'valueAttributeIRI'}, inplace=True)
+
+        # uniqid generation:
+        resulting_df['uniqid'] = ""
+        for i in resulting_df.index:
+            resulting_df.at[i, "uniqid"] = milisec()
+
+
+        # # Empty value row removal
+        # for row_final in resulting_df.iterrows():
+        #     if row_final[1]["valueOutput_date"] == None and row_final[1]["valueOutput_string"] == None and row_final[1]["valueOutput_float"] == None:
+        #         resulting_df = resulting_df.drop(row_final[0])
+
+        #     # Reset Dataframe index again
+        #     resulting_df = resulting_df.reset_index(drop=True)
                     
-        # uniqid (re)generation:
-        resulting_df = resulting_df.reset_index(drop=True)
+        # # uniqid (re)generation:
+        # resulting_df = resulting_df.reset_index(drop=True)
 
-        if uniqid_generation:
-            resulting_df['uniqid'] = ""
-            for i in resulting_df.index:
-                resulting_df.at[i, "uniqid"] = milisec()
+        # if uniqid_generation:
+        #     resulting_df['uniqid'] = ""
+        #     for i in resulting_df.index:
+        #         resulting_df.at[i, "uniqid"] = milisec()
 
-        # context_id (re)generation:
-        if contextid_generation:
-            resulting_df['context_id'] = ""
-            for i in resulting_df.index:
-                resulting_df.at[i, "context_id"] = milisec()
+        # # context_id (re)generation:
+        # if contextid_generation:
+        #     resulting_df['context_id'] = ""
+        #     for i in resulting_df.index:
+        #         resulting_df.at[i, "context_id"] = milisec()
 
         
         print("Structural transformation: Done")
@@ -257,19 +300,19 @@ class Hefesto():
         return new
         
 
-# Test 1:
+# # Test 1:
 
-test = Hefesto(datainput = "../data/NEWDATA.csv")
-transform = test.transform_Fiab()
-transform.to_csv ("../data/CDEresult_666.csv", index = False, header=True)
+# test = Hefesto(datainput = "../data/NEWDATA.csv")
+# transform = test.transform_Fiab()
+# transform.to_csv ("../data/CDEresult_666.csv", index = False, header=True)
 
-# # Test 2
-# with open("../data/CDEconfig.yaml") as file:
-#     configuration = yaml.load(file, Loader=yaml.FullLoader)
+# Test 2
+with open("../data/CDEconfig2.yaml") as file:
+    configuration = yaml.load(file, Loader=yaml.FullLoader)
 
-# test = Hefesto(datainput = "../data/input2.csv")
-# transform = test.transform_shape(configuration=configuration, clean_blanks = True) #, clean_blanks=False
-# # label = test.get_label("output_type")
-# # url_from_label= test.get_uri("output_type_label","ncit")
-# # repl= test.replacement("output_type_label", "Date","DateXXX", duplicate=False)
-# transform.to_csv ("../data/result6.csv", index = False, header=True)
+test = Hefesto(datainput = "../data/input2.csv")
+transform = test.transform_shape(configuration=configuration, clean_blanks = True) #, clean_blanks=False
+# label = test.get_label("output_type")
+# url_from_label= test.get_uri("output_type_label","ncit")
+# repl= test.replacement("output_type_label", "Date","DateXXX", duplicate=False)
+transform.to_csv ("../data/result_LETSEE.csv", index = False, header=True)

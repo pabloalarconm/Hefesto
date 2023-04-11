@@ -1,0 +1,172 @@
+Birth_date:
+  cde: Birthdate
+  columns:
+    pid: pat_id
+    value: birthdate
+    value_datatype: xsd:date
+    startdate: first_visit_date
+    enddate: first_visit_date
+    context_id: context_id
+
+Sex:
+  cde: Sex
+  columns:
+    pid: pat_id
+    attribute_id: sex_uri
+    startdate: first_visit_date
+    enddate: first_visit_date
+    context_id: context_id
+
+
+Status:
+  cde: Status
+  columns:
+    pid: pat_id
+    attribute_id: status_uri
+    startdate: status_datetime
+    enddate: status_datetime
+    context_id: context_id
+
+Date_of_death:
+  cde: Deathdate
+  columns:
+    pid: pat_id
+    value: death_date
+    startdate: death_date
+    enddate: death_date
+    context_id: context_id
+
+Care_pathway:
+  cde: First_visit
+  columns:
+    pid: pat_id
+    value: first_visit_date
+    startdate: first_visit_date
+    enddate: first_visit_date
+    context_id: context_id
+
+Diagnosis:
+  cde: Diagnosis
+  columns:
+    pid: pat_id
+    attribute_id: diagnosis
+    startdate: diagnosis_date
+    enddate: diagnosis_date
+    context_id: context_id
+
+# Onset_diagnosis:
+#   cde: Onset_diagnosis
+#   columns:
+#     pid: pat_id
+#     valueOutput_date: diagnosis_date
+#     valueAttributeIRI: onset_diagnosis
+#     startdate: diagnosis_date
+#     enddate: diagnosis_date
+
+Onset_symptoms:
+  cde: Onset_symptoms
+  columns:
+    pid: pat_id
+    valueAttributeIRI: onset_symptom
+    valueOutput_date: first_symptoms_date
+    startdate: first_visit_date
+    enddate: first_visit_date
+    context_id: context_id
+
+Genotype_HGVS:
+  cde: Genetic
+  columns:
+    pid: pat_id
+    attribute_id: hgvs_id
+    startdate: first_visit_date
+    enddate: first_visit_date
+    context_id: context_id
+
+Genotype_HGNC:
+  cde: Genetic
+  columns:
+    pid: pat_id
+    attribute_id: hgnc_id
+    startdate: first_visit_date
+    enddate: first_visit_date
+    context_id: context_id
+
+Genotype_OMIM:
+  cde: Genetic
+  columns:
+    pid: pat_id
+    attribute_id: omim_id
+    startdate: first_visit_date
+    enddate: first_visit_date
+    context_id: context_id
+
+
+Phenotype:
+  cde: Diagnosis
+  columns:
+    pid: pat_id
+    attribute_id: dia_ce_sle_vasculitis_uri
+    startdate: first_visit_date
+    enddate: first_visit_date
+    context_id: context_id
+
+
+# Consent_clinical:
+#   cde: Consent_used
+#   columns:
+#     pid: pat_id
+#     # value: consent_clinical
+#     startdate: informed_consent_date
+#     enddate: informed_consent_date
+
+
+# Consent_research:
+#   cde: Consent_contacted
+#   columns:
+#     pid: pat_id
+#     # value: consent_research
+#     startdate: informed_consent_date
+#     enddate: informed_consent_date
+
+
+Disability:
+  cde: Disability
+  columns:
+    pid: pat_id
+    value: disability_score
+    process_type : disability_type
+    startdate: disability_datetime
+    enddate: disability_datetime
+    context_id: context_id
+
+
+# Biobank:
+#   cde: Biobank
+#   columns:
+#     pid: pat_id
+#     value: biobank_id
+#     startdate: informed_consent_date
+#     enddate: informed_consent_date
+
+Lab_creatinine:
+  cde: Lab_measurement
+  columns:
+    pid: pat_id
+    context_id: context_id
+    input_type: lab_input
+    value: lab_value
+    target_type: lab_target
+    unit_type: lab_unit
+    startdate: disability_datetime
+    enddate: disability_datetime
+        
+Body_weight:
+  cde: Body_measurement
+  columns:
+    pid: pat_id
+    context_id: context_id
+    attribute_id: body_measurement
+    value: weight
+    unit_type: weight_unit
+    startdate: disability_datetime
+    enddate: disability_datetime
