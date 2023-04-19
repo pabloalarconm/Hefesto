@@ -1,6 +1,19 @@
 from Hefesto.main import Hefesto
 import yaml
 
-test = Hefesto(datainput = "data/input.csv")
+# Test 1
+test = Hefesto(datainput = "data/INPUT_DATA.csv")
 transform = test.transform_Fiab()
-transform.to_csv ("data/CDEresult_final.csv", index = False, header=True)
+transform.to_csv ("data/OUTPUT_DATA.csv", index = False, header=True)
+
+
+# Test 2
+with open("data/CDEconfig.yaml") as file:
+    configuration = yaml.load(file, Loader=yaml.FullLoader)
+
+test = Hefesto(datainput = "data/INPUT_DATA2.csv")
+transform = test.transform_shape(configuration=configuration, clean_blanks = True) #, clean_blanks=False
+# label = test.get_label("output_type")
+# url_from_label= test.get_uri("output_type_label","ncit")
+# repl= test.replacement("output_type_label", "Date","DateXXX", duplicate=False)
+transform.to_csv ("data/OUTPUT_DATA2.csv", index = False, header=True)
