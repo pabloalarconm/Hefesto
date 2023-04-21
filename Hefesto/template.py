@@ -280,7 +280,7 @@ class Template:
       comments = None ,
       pid = None ,
       context_id = None 
-    ),
+    )
 
 
   )

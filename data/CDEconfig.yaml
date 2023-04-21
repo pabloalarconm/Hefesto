@@ -69,8 +69,8 @@ Onset_symptoms:
     pid: pat_id
     valueAttributeIRI: onset_symptom
     valueOutput_date: first_symptoms_date
-    startdate: first_visit_date
-    enddate: first_visit_date
+    startdate: diagnosis_date
+    enddate: diagnosis_date
     context_id: context_id
 
 Genotype_HGVS:
@@ -78,8 +78,8 @@ Genotype_HGVS:
   columns:
     pid: pat_id
     attribute_id: hgvs_id
-    startdate: first_visit_date
-    enddate: first_visit_date
+    startdate: test_datetime
+    enddate: test_datetime
     context_id: context_id
 
 Genotype_HGNC:
@@ -87,8 +87,8 @@ Genotype_HGNC:
   columns:
     pid: pat_id
     attribute_id: hgnc_id
-    startdate: first_visit_date
-    enddate: first_visit_date
+    startdate: test_datetime
+    enddate: test_datetime
     context_id: context_id
 
 Genotype_OMIM:
@@ -96,8 +96,8 @@ Genotype_OMIM:
   columns:
     pid: pat_id
     attribute_id: omim_id
-    startdate: first_visit_date
-    enddate: first_visit_date
+    startdate: test_datetime
+    enddate: test_datetime
     context_id: context_id
 
 
@@ -106,27 +106,31 @@ Phenotype:
   columns:
     pid: pat_id
     attribute_id: dia_ce_sle_vasculitis_uri
-    startdate: first_visit_date
-    enddate: first_visit_date
+    startdate: test_datetime
+    enddate: test_datetime
     context_id: context_id
 
 
-# Consent_clinical:
-#   cde: Consent_used
-#   columns:
-#     pid: pat_id
-#     # value: consent_clinical
-#     startdate: informed_consent_date
-#     enddate: informed_consent_date
+Consent_clinical:
+  cde: Consent_used
+  columns:
+    pid: pat_id
+    value: consent_clinical
+    startdate: informed_consent_date
+    enddate: informed_consent_date
+    comments: consent_clinical
+    context_id: context_id
 
 
-# Consent_research:
-#   cde: Consent_contacted
-#   columns:
-#     pid: pat_id
-#     # value: consent_research
-#     startdate: informed_consent_date
-#     enddate: informed_consent_date
+Consent_research:
+  cde: Consent_contacted
+  columns:
+    pid: pat_id
+    value: consent_research
+    startdate: informed_consent_date
+    enddate: informed_consent_date
+    comments: consent_research
+    context_id: context_id
 
 
 Disability:
@@ -140,13 +144,14 @@ Disability:
     context_id: context_id
 
 
-# Biobank:
-#   cde: Biobank
-#   columns:
-#     pid: pat_id
-#     value: biobank_id
-#     startdate: informed_consent_date
-#     enddate: informed_consent_date
+Biobank:
+  cde: Biobank
+  columns:
+    pid: pat_id
+    agent_id: biobank_id
+    startdate: informed_consent_date
+    enddate: informed_consent_date
+    context_id: context_id
 
 Lab_creatinine:
   cde: Lab_measurement
@@ -157,8 +162,8 @@ Lab_creatinine:
     value: lab_value
     target_type: lab_target
     unit_type: lab_unit
-    startdate: disability_datetime
-    enddate: disability_datetime
+    startdate: test_datetime
+    enddate: test_datetime
         
 Body_weight:
   cde: Body_measurement
@@ -168,5 +173,29 @@ Body_weight:
     attribute_type: body_measurement
     value: weight
     unit_type: weight_unit
-    startdate: disability_datetime
-    enddate: disability_datetime
+    startdate: test_datetime
+    enddate: test_datetime
+
+BMI:
+  cde: Body_measurement
+  columns:
+    pid: pat_id
+    context_id: context_id
+    attribute_type: bmi_measurement
+    value: bmi_value
+    startdate: test_datetime
+    enddate: test_datetime
+
+Med:
+  cde: Medications
+  columns:
+    pid: pat_id
+    context_id: context_id
+    startdate: med_date
+    enddate: med_date
+    value: dose_value
+    unit_type: unit_type
+    frequency_type: freq_type
+    frequency_value: frequency_value
+    agent_id: drug_used
+
