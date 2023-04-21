@@ -63,14 +63,25 @@ Diagnosis:
 #     startdate: diagnosis_date
 #     enddate: diagnosis_date
 
-Onset_symptoms:
+Onset_symptoms_date:
   cde: Onset_symptoms
   columns:
     pid: pat_id
-    valueAttributeIRI: onset_symptom
-    valueOutput_date: first_symptoms_date
-    startdate: diagnosis_date
-    enddate: diagnosis_date
+    attribute_id: onset_diagnosis
+    value: first_symptoms_date
+    startdate: first_symptoms_date
+    enddate: first_symptoms_date
+    context_id: context_id
+
+Onset_symptoms_age:
+  cde: Onset_symptoms
+  columns:
+    pid: pat_id
+    attribute_id: onset_symptom
+    value: age_at_diagnosis
+    startdate: first_symptoms_date
+    value_datatype: datatype_symptom
+    enddate: first_symptoms_date
     context_id: context_id
 
 Genotype_HGVS:
