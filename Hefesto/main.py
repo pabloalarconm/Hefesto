@@ -1,31 +1,40 @@
 import pandas as pd
 from perseo.main import milisec
-from template import Template
-# from Hefesto.template import Template
+# from template import Template
+from Hefesto.template import Template
 import sys
 import yaml
 import math
 import requests
+import logging
 
 class Hefesto():
 
     def __init__(self, datainput, reset = False):
-        # Create an object as dictonary to reduce duplicate calls:
-        self.reg = dict()
-
         # Import data input:
         if not reset:
-            self.df_data = pd.read_csv(datainput)
-            self.df_data = self.df_data.where(pd.notnull(self.df_data), None)
-
+            try:
+                self.df_data = pd.read_csv(datainput)
+            except FileNotFoundError:
+                raise FileNotFoundError(f"File '{datainput}' does not exist.")
+            finally:
+                self.df_data = self.df_data.where(pd.notnull(self.df_data), None)
         else:
             self.df_data = datainput
             return self.df_data
+        
+        # Create an object as dictonary to reduce duplicate calls:
+        self.reg = dict()
 
-    def transform_Fiab(self):
+
+    def transformFiab(self):
 
     # Import static template for all CDE terms:
         temp = Template.template_model
+
+    # Check the status of the dataframe used:
+        if not "model" and "pid" and "value" in self.df_data.columns:
+            sys.exit(" The quality of the data used in not correct, please check CSV used to perform the transformation.")
 
     # Empty objects:
         resulting_df = pd.DataFrame()
@@ -59,42 +68,10 @@ class Hefesto():
         # Turn any nan to None:
         resulting_df = resulting_df.where(pd.notnull(resulting_df), None)
 
-        # Delete columns without values:
-        # for row_final in resulting_df.iterrows():
-        #     if row_final[1]["value"] == None and row_final[1]["valueIRI"] == None:
-        #         resulting_df = resulting_df.drop(row_final[0])
-
-        # Datatype:
-        datatype_relationship = {
-            "xsd:string":"value_string",
-            "xsd:date" : "value_date",
-            "xsd:float": "value_float",
-            "xsd:integer":"value_integer"
-        }
-
         # Value edition:
-        for index, row in resulting_df.iterrows():
-            for k,v in datatype_relationship.items():
-
-                # value ---> value_DATATYPE:
-                if row["value_datatype"] == k:
-                    resulting_df.at[index, v] = resulting_df["value"][index]
-
-                # # valueIRI ---> process_type for Disability
-                # if row["model"] == "Disability" and row["valueIRI"] != None:
-                #     resulting_df.at[index, "process_type"] = resulting_df["valueIRI"][index]
-                #     resulting_df["valueIRI"][index] = None
-
-                # enddate correction:
-                if row["startdate"] != None and row["enddate"] == None:
-                    resulting_df["enddate"][index] = resulting_df["startdate"][index]
-
-        del resulting_df["value"]
-
-
-        # # valueIRI ---> valueAttributeIRI:
-        # del resulting_df["valueAttributeIRI"]
-        # resulting_df.rename(columns={'valueIRI':'valueAttributeIRI'}, inplace=True)
+        resulting_df = self.valueEdition(resulting_df)
+        # Clean blanks:
+        resulting_df = self.cleanBlanks(resulting_df)
 
         # uniqid generation:
         resulting_df['uniqid'] = ""
@@ -105,7 +82,7 @@ class Hefesto():
         new = Hefesto.__init__(self, datainput= resulting_df, reset = True)
         return new
 
-    def transform_shape(self,configuration, uniqid_generation= True, contextid_generation= True, clean_blanks= False):
+    def transformShape(self,configuration, uniqid_generation= True, contextid_generation= True, clean_blanks= False):
 
         if type(configuration) is not dict:
             sys.exit("configuration file must be a dictionary from a Python, YAML or JSON file")
@@ -149,6 +126,31 @@ class Hefesto():
         resulting_df = resulting_df.reset_index(drop=True)
         # Turn any nan to None:
         resulting_df = resulting_df.where(pd.notnull(resulting_df), None)
+        # Value edition:
+        resulting_df = self.valueEdition(resulting_df)
+        # Clean blanks:
+        resulting_df = self.cleanBlanks(resulting_df)
+        
+        # uniqid generation:
+        resulting_df['uniqid'] = ""
+        for i in resulting_df.index:
+            resulting_df.at[i, "uniqid"] = milisec()
+
+        
+        print("Structural transformation: Done")
+        new = Hefesto.__init__(self, datainput= resulting_df, reset = True)
+        return new
+
+    def cleanBlanks(self, resulting_df):
+
+        for row_final in resulting_df.iterrows():
+            if row_final[1]["value"] == None and row_final[1]["attribute_id"] == None and row_final[1]["comments"] == None and row_final[1]["agent_id"] == None:
+                resulting_df = resulting_df.drop(row_final[0])
+        del resulting_df["value"]
+
+        return resulting_df
+
+    def valueEdition(self, resulting_df):
 
         # Datatype:
         datatype_relationship = {
@@ -157,12 +159,11 @@ class Hefesto():
             "xsd:float": "value_float",
             "xsd:integer":"value_integer"
         }
-
+        
         # Value edition:
         for index, row in resulting_df.iterrows():
             for k,v in datatype_relationship.items():
                 
-
                 # value ---> value_DATATYPE:
                 if row["value_datatype"] == k:
                     resulting_df.at[index, v] = resulting_df["value"][index]
@@ -170,53 +171,10 @@ class Hefesto():
 
                 # enddate correction:
                 if row["startdate"] != None and row["enddate"] == None:
-                    resulting_df["enddate"][index] = resulting_df["startdate"][index]
+                    resulting_df.at[index,"enddate"] = resulting_df["startdate"][index]
                     resulting_df = resulting_df.where(pd.notnull(resulting_df), None)
 
-
-        # clean blanks
-        for row_final in resulting_df.iterrows():
-            if row_final[1]["value"] == None and row_final[1]["attribute_id"] == None and row_final[1]["comments"] == None and row_final[1]["agent_id"] == None:
-                resulting_df = resulting_df.drop(row_final[0])
-        del resulting_df["value"]
-
-
-        # # valueIRI ---> valueAttributeIRI:
-        # del resulting_df["valueAttributeIRI"]
-        # resulting_df.rename(columns={'valueIRI':'valueAttributeIRI'}, inplace=True)
-
-        # uniqid generation:
-        resulting_df['uniqid'] = ""
-        for i in resulting_df.index:
-            resulting_df.at[i, "uniqid"] = milisec()
-
-
-        # # Empty value row removal
-        # for row_final in resulting_df.iterrows():
-        #     if row_final[1]["valueOutput_date"] == None and row_final[1]["valueOutput_string"] == None and row_final[1]["valueOutput_float"] == None:
-        #         resulting_df = resulting_df.drop(row_final[0])
-
-        #     # Reset Dataframe index again
-        #     resulting_df = resulting_df.reset_index(drop=True)
-                    
-        # # uniqid (re)generation:
-        # resulting_df = resulting_df.reset_index(drop=True)
-
-        # if uniqid_generation:
-        #     resulting_df['uniqid'] = ""
-        #     for i in resulting_df.index:
-        #         resulting_df.at[i, "uniqid"] = milisec()
-
-        # # context_id (re)generation:
-        # if contextid_generation:
-        #     resulting_df['context_id'] = ""
-        #     for i in resulting_df.index:
-        #         resulting_df.at[i, "context_id"] = milisec()
-
-        
-        print("Structural transformation: Done")
-        new = Hefesto.__init__(self, datainput= resulting_df, reset = True)
-        return new
+        return resulting_df
 
     def get_uri(self, col, ont):
 
@@ -251,8 +209,6 @@ class Hefesto():
         new = Hefesto.__init__(self, datainput= self.df_data, reset = True)
         return new
 
-
-
     def get_label(self, col):
 
         # Column duplication to work in new column:
@@ -281,7 +237,6 @@ class Hefesto():
         new = Hefesto.__init__(self, datainput= self.df_data, reset = True)
         return new
 
-    
     def replacement(self, col, key, value, duplicate = False):
 
         if duplicate == "True":
@@ -302,7 +257,7 @@ class Hefesto():
 # transform = test.transform_Fiab()
 # transform.to_csv ("../data/OUTPUT_DATA.csv", index = False, header=True)
 
-# # Test 2
+# # # Test 2
 # with open("../data/CDEconfig.yaml") as file:
 #     configuration = yaml.load(file, Loader=yaml.FullLoader)
 

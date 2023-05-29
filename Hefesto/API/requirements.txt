@@ -1,0 +1,8 @@
+PyYAML
+pyperseo
+pandas
+fastapi
+uvicorn
+Hefesto
+rdflib
+requests

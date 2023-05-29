@@ -3,11 +3,11 @@ class Template:
 
   template_model = dict(
 
-    Age = dict(
+    Birthyear = dict(
       process_type = "http://purl.obolibrary.org/obo/NCIT_C142470",
       output_type = "http://purl.obolibrary.org/obo/NCIT_C70856",
-      attribute_type = "http://purl.obolibrary.org/obo/NCIT_C25150",
-      value_datatype = "xsd:date",
+      attribute_id = "http://purl.obolibrary.org/obo/NCIT_C83164",
+      value_datatype = "xsd:integer",
       startdate = None,
       enddate = None,
       pid = None,
@@ -17,7 +17,7 @@ class Template:
     Birthdate = dict(
       process_type = "http://purl.obolibrary.org/obo/NCIT_C142470",
       output_type = "http://purl.obolibrary.org/obo/NCIT_C70856",
-      attribute_type = "http://purl.obolibrary.org/obo/NCIT_C68615",
+      attribute_id = "http://purl.obolibrary.org/obo/NCIT_C68615",
       value_datatype = "xsd:date",
       startdate = None,
       enddate = None,
@@ -28,7 +28,7 @@ class Template:
     Deathdate = dict( 
       process_type= "http://purl.obolibrary.org/obo/NCIT_C142470",
       output_type= "http://purl.obolibrary.org/obo/NCIT_C70856",
-      attribute_type = "http://purl.obolibrary.org/obo/NCIT_C70810",
+      attribute_id = "http://purl.obolibrary.org/obo/NCIT_C70810",
       value_datatype = "xsd:date",
       startdate = None,
       enddate = None,
@@ -39,7 +39,7 @@ class Template:
     First_visit = dict(
       process_type = "http://purl.obolibrary.org/obo/NCIT_C142470",
       output_type = "http://purl.obolibrary.org/obo/NCIT_C70856",
-      attribute_type = "http://purl.obolibrary.org/obo/NCIT_C164021",
+      attribute_id = "http://purl.obolibrary.org/obo/NCIT_C164021",
       value_datatype = "xsd:date",
       startdate = None,
       enddate = None,
@@ -92,10 +92,11 @@ class Template:
     #   context_id = None
     # ),
 
-    Onset_symptoms = dict(
+    Symptoms_onset_date = dict(
       process_type= "http://purl.obolibrary.org/obo/NCIT_C142470",
       output_type = "http://purl.obolibrary.org/obo/NCIT_C70856",
       attribute_type= "http://purl.obolibrary.org/obo/NCIT_C124353",
+      attribute_id= "http://purl.obolibrary.org/obo/NCIT_C119242",
       value_datatype = "xsd:date",
       startdate = None,
       enddate = None,
@@ -103,18 +104,17 @@ class Template:
       context_id = None
     ),
 
-    # Phenotype = dict(
-    #   process_type= "http://purl.obolibrary.org/obo/NCIT_C25305",
-    #   output_type= "http://purl.obolibrary.org/obo/NCIT_C125204",
-    #   attribute_type= "http://semanticscience.org/resource/SIO_010056",
-    #   attribute_id = None,
-    #   value_string= None,
-    #   value_datatype = None,
-    #   startdate = None,
-    #   enddate = None,
-    #   pid = None,
-    #   context_id = None
-    # ),
+    Symptoms_onset_age = dict(
+      process_type= "http://purl.obolibrary.org/obo/NCIT_C142470",
+      output_type = "http://purl.obolibrary.org/obo/NCIT_C70856",
+      attribute_type= "http://purl.obolibrary.org/obo/NCIT_C124353",
+      attribute_id= "http://purl.obolibrary.org/obo/NCIT_C174273",
+      value_datatype = "xsd:float",
+      startdate = None,
+      enddate = None,
+      pid = None,
+      context_id = None
+    ),
 
     Genetic = dict(
       process_type= "http://purl.obolibrary.org/obo/NCIT_C15709",
@@ -127,49 +127,10 @@ class Template:
       context_id = None
     ),
 
-    # Genotype_OMIM = dict(
-    #   process_type= "http://purl.obolibrary.org/obo/NCIT_C15709",
-    #   output_type= "http://purl.obolibrary.org/obo/NCIT_C16612",
-    #   attribute_type= "http://edamontology.org/data_1153",
-    #   attribute_id = None,
-    #   value_string= None,
-    #   value_datatype = None,
-    #   startdate = None,
-    #   enddate = None,
-    #   pid = None,
-    #   context_id = None
-    # ),
-
-    # Genotype_HGNC = dict(
-    #   process_type= "http://purl.obolibrary.org/obo/NCIT_C15709",
-    #   output_type= "http://purl.obolibrary.org/obo/NCIT_C16612",
-    #   attribute_type= "http://edamontology.org/data_2298",
-    #   attribute_id = None,
-    #   value_string= None,
-    #   value_datatype = None,
-    #   startdate = None,
-    #   enddate = None,
-    #   pid = None,
-    #   context_id = None
-    # ),
-
-    # Consent = dict(
-    #   process_type= "http://purl.obolibrary.org/obo/OBI_0000810",
-    #   output_type = None,
-    #   attribute_type= "http://purl.obolibrary.org/obo/NCIT_C25460",
-    #   attribute_id = None,
-    #   value_string= None,
-    #   value_datatype = None,
-    #   startdate = None,
-    #   enddate = None,
-    #   pid = None,
-    #   context_id = None
-    # ),
-
     Consent_contacted = dict(
       process_type= "http://purl.obolibrary.org/obo/OBI_0000810",
       output_type = "http://purl.obolibrary.org/obo/OBIB_0000488",
-      attribute_type= "http://purl.obolibrary.org/obo/NCIT_C25460",
+      attribute_id= "http://purl.obolibrary.org/obo/NCIT_C25460",
       value_datatype = "xsd:string",
       startdate = None,
       enddate = None,
@@ -180,7 +141,7 @@ class Template:
     Consent_used = dict(
       process_type= "http://purl.obolibrary.org/obo/OBI_0000810",
       output_type = "http://purl.obolibrary.org/obo/DUO_0000001",
-      attribute_type= "http://purl.obolibrary.org/obo/NCIT_C25460",
+      attribute_id= "http://purl.obolibrary.org/obo/NCIT_C25460",
       value_datatype = "xsd:string",
       startdate = None,
       enddate = None,
@@ -191,7 +152,7 @@ class Template:
     Biobank = dict(
       process_type= "http://purl.obolibrary.org/obo/OMIABIS_0000061",
       output_type= "http://purl.obolibrary.org/obo/NCIT_C115570",
-      attribute_type= "http://purl.obolibrary.org/obo/NCIT_C25429",
+      attribute_id= "http://purl.obolibrary.org/obo/NCIT_C25429",
       value_datatype = "xsd:string",
       startdate = None,
       enddate = None,
@@ -202,7 +163,7 @@ class Template:
     Disability = dict(
       process_type = None,
       output_type = "http://purl.obolibrary.org/obo/NCIT_C70856",
-      attribute_type = "http://purl.obolibrary.org/obo/NCIT_C21007",
+      attribute_id = "http://purl.obolibrary.org/obo/NCIT_C21007",
       value_datatype = "xsd:float",
       startdate = None,
       enddate = None,
@@ -237,6 +198,7 @@ class Template:
     Imaging = dict(
       process_type = None ,
       output_type =  "http://purl.obolibrary.org/obo/NCIT_C70856" ,
+      attribute_id = "http://purl.obolibrary.org/obo/NCIT_C176708",
       value_datatype = "xsd:string" ,
       startdate= None ,
       enddate= None ,
@@ -246,7 +208,7 @@ class Template:
     ),
 
 
-    Surgery = dict(
+    Intervention = dict(
       value_datatype = "xsd:string" ,
       startdate= None ,
       enddate= None ,
