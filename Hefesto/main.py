@@ -141,19 +141,30 @@ class Hefesto():
         new = Hefesto.__init__(self, datainput= resulting_df, reset = True)
         return new
 
-    def cleanBlanks(self, resulting_df):
+    def cleanBlanks(self, resulting_df): # TODO solve the attribute_type value problem
 
         for row_final in resulting_df.iterrows():
-            if row_final[1]["value"] == None and row_final[1]["attribute_id"] == None and row_final[1]["comments"] == None and row_final[1]["agent_id"] == None:
+            if row_final[1]["value"] == None and row_final[1]["valueIRI"] == None and row_final[1]["comments"] == None and row_final[1]["agent_id"] == None:
                 resulting_df = resulting_df.drop(row_final[0])
         del resulting_df["value"]
+        del resulting_df["valueIRI"]
 
         return resulting_df
 
     def valueEdition(self, resulting_df):
 
+        # valueIRI 
+        valueRelation = {
+            "Sex":"attribute_type",
+            "Status":"attribute_type",
+            "Diagnosis":"attribute_type",
+            "Genetic":"attribute_id",
+            "Symptoms":"attribute_type",
+            "Imaging":"attribute_id",
+            "Clinical_trial":"attribute_type"
+        }
         # Datatype:
-        datatype_relationship = {
+        datatypeRelation = {
             "xsd:string":"value_string",
             "xsd:date" : "value_date",
             "xsd:float": "value_float",
@@ -162,7 +173,7 @@ class Hefesto():
         
         # Value edition:
         for index, row in resulting_df.iterrows():
-            for k,v in datatype_relationship.items():
+            for k,v in datatypeRelation.items():
                 
                 # value ---> value_DATATYPE:
                 if row["value_datatype"] == k:
@@ -173,6 +184,18 @@ class Hefesto():
                 if row["startdate"] != None and row["enddate"] == None:
                     resulting_df.at[index,"enddate"] = resulting_df["startdate"][index]
                     resulting_df = resulting_df.where(pd.notnull(resulting_df), None)
+
+            for k,v in valueRelation.items():
+                # valueIRI ---> attribute_id/value:
+                if row["model"] == k:
+                    resulting_df.at[index, v] = resulting_df["valueIRI"][index]
+                    resulting_df = resulting_df.where(pd.notnull(resulting_df), None)
+
+            # attribute_id_value
+            if row["model"] == "Genetic":
+                resulting_df.at[index, "attribute_id_value"] = resulting_df["value"][index]
+                resulting_df.at[index, "value_string"] = None # Deleting the value_string in case it moves from value to value_string
+                resulting_df = resulting_df.where(pd.notnull(resulting_df), None)
 
         return resulting_df
 
@@ -253,8 +276,8 @@ class Hefesto():
 
 # # Test 1:
 
-# test = Hefesto(datainput = "../data/INPUT_DATA.csv")
-# transform = test.transform_Fiab()
+# test = Hefesto(datainput = "../data/INPUT_DATA_test.csv")
+# transform = test.transformFiab()
 # transform.to_csv ("../data/OUTPUT_DATA.csv", index = False, header=True)
 
 # # # Test 2
@@ -262,7 +285,7 @@ class Hefesto():
 #     configuration = yaml.load(file, Loader=yaml.FullLoader)
 
 # test = Hefesto(datainput = "../data/INPUT_DATA2.csv")
-# transform = test.transform_shape(configuration=configuration, clean_blanks = True) #, clean_blanks=False
+# transform = test.transformShape(configuration=configuration, clean_blanks = True) #, clean_blanks=False
 # # label = test.get_label("output_type")
 # # url_from_label= test.get_uri("output_type_label","ncit")
 # # repl= test.replacement("output_type_label", "Date","DateXXX", duplicate=False)

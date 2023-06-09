@@ -20,7 +20,7 @@ Sex:
   cde: Sex
   columns:
     pid: pat_id
-    attribute_id: sex_uri
+    valueIRI: sex_uri
     startdate: first_visit_date
     enddate: first_visit_date
     context_id: context_id
@@ -30,7 +30,7 @@ Status:
   cde: Status
   columns:
     pid: pat_id
-    attribute_id: status_uri
+    valueIRI: status_uri
     startdate: status_datetime
     enddate: status_datetime
     context_id: context_id
@@ -57,34 +57,27 @@ Diagnosis:
   cde: Diagnosis
   columns:
     pid: pat_id
-    attribute_id: diagnosis
+    valueIRI: diagnosis
     startdate: diagnosis_date
     enddate: diagnosis_date
     context_id: context_id
 
-Onset_symptoms_date:
-  cde: Symptoms_onset_date
+SymptomVasculitis:
+  cde: Symptoms
   columns:
     pid: pat_id
-    value: first_symptoms_date
+    valueIRI: dia_ce_sle_vasculitis_uri
     startdate: first_symptoms_date
     enddate: first_symptoms_date
-    context_id: context_id
-
-Onset_symptoms_age:
-  cde: Symptoms_onset_age
-  columns:
-    pid: pat_id
-    value: age_first_symptoms
-    startdate: first_symptoms_date
-    enddate: first_symptoms_date
+    age: age_first_symptoms
     context_id: context_id
 
 Genotype_HGVS:
   cde: Genetic
   columns:
     pid: pat_id
-    attribute_id: hgvs_id
+    valueIRI: hgvs_id
+    value: hgvs_code
     startdate: test_datetime
     enddate: test_datetime
     context_id: context_id
@@ -93,7 +86,8 @@ Genotype_HGNC:
   cde: Genetic
   columns:
     pid: pat_id
-    attribute_id: hgnc_id
+    valueIRI: hgnc_id
+    value: hgnc_code
     startdate: test_datetime
     enddate: test_datetime
     context_id: context_id
@@ -102,7 +96,8 @@ Genotype_OMIM:
   cde: Genetic
   columns:
     pid: pat_id
-    attribute_id: omim_id
+    valueIRI: omim_id
+    value: omim_code
     startdate: test_datetime
     enddate: test_datetime
     context_id: context_id
@@ -111,7 +106,7 @@ Phenotype:
   cde: Diagnosis
   columns:
     pid: pat_id
-    attribute_id: dia_ce_sle_vasculitis_uri
+    valueIRI: dia_ce_sle_vasculitis_uri
     startdate: test_datetime
     enddate: test_datetime
     context_id: context_id
@@ -176,7 +171,7 @@ Body_weight:
   columns:
     pid: pat_id
     context_id: context_id
-    attribute_type: body_measurement
+    valueIRI: body_measurement
     value: weight
     unit_type: weight_unit
     startdate: test_datetime
@@ -187,7 +182,7 @@ BMI:
   columns:
     pid: pat_id
     context_id: context_id
-    attribute_type: bmi_measurement
+    valueIRI: bmi_measurement
     value: bmi_value
     startdate: test_datetime
     enddate: test_datetime
