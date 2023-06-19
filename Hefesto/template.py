@@ -10,8 +10,7 @@ class Template:
       value_datatype = "xsd:integer",
       startdate = None,
       enddate = None,
-      pid = None,
-      context_id = None
+      pid = None
     ),
 
     Birthdate = dict(
@@ -21,8 +20,7 @@ class Template:
       value_datatype = "xsd:date",
       startdate = None,
       enddate = None,
-      pid = None,
-      context_id = None
+      pid = None
     ),
 
     Deathdate = dict( 
@@ -32,8 +30,7 @@ class Template:
       value_datatype = "xsd:date",
       startdate = None,
       enddate = None,
-      pid = None,
-      context_id = None
+      pid = None
     ),
 
     First_visit = dict(
@@ -43,8 +40,7 @@ class Template:
       value_datatype = "xsd:date",
       startdate = None,
       enddate = None,
-      pid = None,
-      context_id = None
+      pid = None
     ),
 
     Sex = dict( 
@@ -54,8 +50,7 @@ class Template:
       value_datatype = "xsd:string",
       startdate = None,
       enddate = None,
-      pid = None,
-      context_id = None
+      pid = None
     ),
 
 
@@ -66,8 +61,7 @@ class Template:
       value_datatype = "xsd:string",
       startdate = None,
       enddate = None,
-      pid = None,
-      context_id = None
+      pid = None
     ),
 
     Diagnosis = dict(
@@ -77,8 +71,7 @@ class Template:
       value_datatype = "xsd:string",
       startdate = None,
       enddate = None,
-      pid = None,
-      context_id = None
+      pid = None
     ),
 
     Symptoms = dict(
@@ -88,8 +81,18 @@ class Template:
       value_datatype = "xsd:string",
       startdate = None,
       enddate = None,
-      pid = None,
-      context_id = None
+      pid = None
+    ),
+
+    Symptoms_onset = dict(
+      process_type= "http://purl.obolibrary.org/obo/NCIT_C15220",
+      output_type = "http://purl.obolibrary.org/obo/NCIT_C70856",
+      attribute_type2= "http://purl.obolibrary.org/obo/NCIT_C100104",
+      attribute_type= "http://purl.obolibrary.org/obo/NCIT_C124353",
+      value_datatype = "xsd:date",
+      startdate = None,
+      enddate = None,
+      pid = None
     ),
 
     Genetic = dict(
@@ -100,8 +103,7 @@ class Template:
       value_datatype = "xsd:string",
       startdate = None,
       enddate = None,
-      pid = None,
-      context_id = None
+      pid = None
     ),
 
     Consent_contacted = dict(
@@ -111,8 +113,7 @@ class Template:
       value_datatype = "xsd:string",
       startdate = None,
       enddate = None,
-      pid = None,
-      context_id = None
+      pid = None
     ),
 
     Consent_used = dict(
@@ -122,8 +123,7 @@ class Template:
       value_datatype = "xsd:string",
       startdate = None,
       enddate = None,
-      pid = None,
-      context_id = None
+      pid = None
     ),
 
     Biobank = dict(
@@ -133,8 +133,7 @@ class Template:
       value_datatype = "xsd:string",
       startdate = None,
       enddate = None,
-      pid = None,
-      context_id = None
+      pid = None
     ),
 
     Disability = dict(
@@ -144,8 +143,7 @@ class Template:
       value_datatype = "xsd:float",
       startdate = None,
       enddate = None,
-      pid = None,
-      context_id = None
+      pid = None
     ),
 
     Body_measurement = dict(
@@ -155,8 +153,7 @@ class Template:
       startdate= None ,
       enddate= None ,
       comments= None ,
-      pid= None ,
-      context_id= None 
+      pid= None  
     ),
 
 
@@ -167,8 +164,7 @@ class Template:
       startdate= None ,
       enddate= None ,
       comments= None ,
-      pid= None ,
-      context_id= None 
+      pid= None 
     ),
 
 
@@ -181,18 +177,18 @@ class Template:
       startdate= None ,
       enddate= None ,
       comments= None ,
-      pid = None ,
-      context_id= None 
+      pid = None 
     ),
 
 
     Intervention = dict(
       value_datatype = "xsd:string" ,
+      process_type = None ,
+      target_type = None ,
       startdate= None ,
       enddate= None ,
       comments= None ,
-      pid= None ,
-      context_id= None 
+      pid= None 
     ),
 
 
@@ -205,8 +201,7 @@ class Template:
       startdate= None ,
       enddate= None ,
       comments= None ,
-      pid= None ,
-      context_id= None
+      pid= None 
     ),
 
 
@@ -218,8 +213,7 @@ class Template:
       startdate= None ,
       enddate = None ,
       comments = None ,
-      pid = None ,
-      context_id = None 
+      pid = None 
     )
 
 

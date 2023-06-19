@@ -1,202 +1,219 @@
 Birth_date:
   cde: Birthdate
   columns:
-    pid: pat_id
+    pid: patient_id
     value: birthdate
-    startdate: first_visit_date
-    enddate: first_visit_date
-    context_id: context_id
+    startdate: birthdate
+    enddate: birthdate
+    
 
 Birthyear:
   cde: Birthyear
   columns:
-    pid: pat_id
+    pid: patient_id
     value: birthyear
     startdate: first_visit_date
     enddate: first_visit_date
-    context_id: context_id
+    
 
 Sex:
   cde: Sex
   columns:
-    pid: pat_id
-    valueIRI: sex_uri
-    startdate: first_visit_date
-    enddate: first_visit_date
-    context_id: context_id
+    pid: patient_id
+    valueIRI: sex
+    startdate: birthdate
+    enddate: birthdate
+    
 
 
 Status:
   cde: Status
   columns:
-    pid: pat_id
-    valueIRI: status_uri
-    startdate: status_datetime
-    enddate: status_datetime
-    context_id: context_id
+    pid: patient_id
+    valueIRI: status
+    startdate: status-date
+    enddate: status-date
+    
 
 Date_of_death:
   cde: Deathdate
   columns:
-    pid: pat_id
-    value: death_date
-    startdate: death_date
-    enddate: death_date
-    context_id: context_id
+    pid: patient_id
+    value: deathdate
+    startdate: deathdate
+    enddate: deathdate
+    
 
 Care_pathway:
   cde: First_visit
   columns:
-    pid: pat_id
-    value: first_visit_date
-    startdate: first_visit_date
-    enddate: first_visit_date
-    context_id: context_id
+    pid: patient_id
+    value: first-confirmed-visit
+    startdate: first-confirmed-visit
+    enddate: first-confirmed-visit
+    
 
-Diagnosis:
-  cde: Diagnosis
-  columns:
-    pid: pat_id
-    valueIRI: diagnosis
-    startdate: diagnosis_date
-    enddate: diagnosis_date
-    context_id: context_id
 
-SymptomVasculitis:
+
+symptomHematuria:
   cde: Symptoms
   columns:
-    pid: pat_id
-    valueIRI: dia_ce_sle_vasculitis_uri
-    startdate: first_symptoms_date
-    enddate: first_symptoms_date
-    age: age_first_symptoms
-    context_id: context_id
+    pid: patient_id
+    valueIRI: symptom-hematuria
+    startdate: symptom-date
+    enddate: symptom-date
+    
 
-Genotype_HGVS:
-  cde: Genetic
+symptomVasculitis:
+  cde: Symptoms
   columns:
-    pid: pat_id
-    valueIRI: hgvs_id
-    value: hgvs_code
-    startdate: test_datetime
-    enddate: test_datetime
-    context_id: context_id
+    pid: patient_id
+    valueIRI: symptom-vasculitis
+    startdate: symptom-date
+    enddate: symptom-date
+    
 
-Genotype_HGNC:
-  cde: Genetic
-  columns:
-    pid: pat_id
-    valueIRI: hgnc_id
-    value: hgnc_code
-    startdate: test_datetime
-    enddate: test_datetime
-    context_id: context_id
 
-Genotype_OMIM:
-  cde: Genetic
+symptomCystinuria:
+  cde: Symptoms
   columns:
-    pid: pat_id
-    valueIRI: omim_id
-    value: omim_code
-    startdate: test_datetime
-    enddate: test_datetime
-    context_id: context_id
+    pid: patient_id
+    valueIRI: symptom-cystinuria
+    startdate: symptom-date
+    enddate: symptom-date
+    context_id: context     
 
-Phenotype:
-  cde: Diagnosis
+    
+symptomOnset:
+  cde: Symptoms_onset
   columns:
-    pid: pat_id
-    valueIRI: dia_ce_sle_vasculitis_uri
-    startdate: test_datetime
-    enddate: test_datetime
-    context_id: context_id
+    pid: patient_id
+    value: date-onset
+    startdate: symptom-date
+    enddate: symptom-date
+    
 
 
 Consent_clinical:
   cde: Consent_used
   columns:
-    pid: pat_id
-    value: value_consent_clinical
-    startdate: informed_consent_date
-    enddate: informed_consent_date
-    comments: consent_clinical
-    context_id: context_id
+    pid: patient_id
+    value: consent-used
+    startdate: consent-date
+    enddate: consent-date
+    
 
 
 Consent_research:
   cde: Consent_contacted
   columns:
-    pid: pat_id
-    value: value_consent_research
-    startdate: informed_consent_date
-    enddate: informed_consent_date
-    comments: consent_research
-    context_id: context_id
+    pid: patient_id
+    value: consent-reseach
+    startdate: consent-date
+    enddate: consent-date
+    
 
+
+Genotype_OMIM:
+  cde: Genetic
+  columns:
+    pid: patient_id
+    valueIRI: omim-id
+    value: omim-value
+    startdate: consent-date
+    enddate: consent-date
+    
 
 Disability:
   cde: Disability
   columns:
-    pid: pat_id
-    value: disability_score
-    process_type : disability_type
-    startdate: disability_datetime
-    enddate: disability_datetime
-    context_id: context_id
-
+    pid: patient_id
+    value: disability-score
+    process_type : disability-type
+    startdate: symptom-date
+    enddate: symptom-date
+    
 
 Biobank:
   cde: Biobank
   columns:
-    pid: pat_id
-    agent_id: biobank_id
-    startdate: informed_consent_date
-    enddate: informed_consent_date
-    context_id: context_id
+    pid: patient_id
+    agent_id: biobank-id
+    startdate: consent-date
+    enddate: consent-date
+    
 
-Lab_creatinine:
+Lab_homocysteine:
   cde: Lab_measurement
   columns:
-    pid: pat_id
-    context_id: context_id
-    input_type: lab_input
-    value: lab_value
-    target_type: lab_target
-    unit_type: lab_unit
-    startdate: test_datetime
-    enddate: test_datetime
-        
-Body_weight:
-  cde: Body_measurement
+    pid: patient_id
+    input_type: input-lab
+    value: lab-value
+    target_type: target-lab
+    unit_type: unit-lab
+    startdate: lab-date
+    enddate: lab-date
+    context_id: context      
+
+
+Diagnosis-acidemia:
+  cde: Diagnosis
   columns:
-    pid: pat_id
-    context_id: context_id
-    valueIRI: body_measurement
-    value: weight
-    unit_type: weight_unit
-    startdate: test_datetime
-    enddate: test_datetime
+    pid: patient_id
+    valueIRI: diagnosis-homocisteruria
+    startdate: diagnosis-date
+    enddate: diagnosis-date
+    context_id: context      
+
+Diagnosis-other:
+  cde: Diagnosis
+  columns:
+    pid: patient_id
+    valueIRI: diagnosis-other
+    startdate: diagnosis-date
+    enddate: diagnosis-date
+    
+
+UltrasoundKidney:
+  cde: Imaging
+  columns:
+    pid: patient_id
+    valueIRI: imaging-id
+    process_type: imaging-process
+    startdate: imaging-date
+    enddate: imaging-date
+    
 
 BMI:
   cde: Body_measurement
   columns:
-    pid: pat_id
-    context_id: context_id
-    valueIRI: bmi_measurement
-    value: bmi_value
-    startdate: test_datetime
-    enddate: test_datetime
+    pid: patient_id
+    valueIRI: bmi
+    value: bmi-value
+    startdate: body-measurement-date
+    enddate: body-measurement-date
+
+Biopsy:
+  cde: Intervention
+  columns:
+    pid: patient_id
+    process_type: skin-biopsy
+    target_type: target-biopsy
+    startdate: biopsy-date
+    enddate: biopsy-date
 
 Med:
   cde: Medications
   columns:
-    pid: pat_id
-    context_id: context_id
-    startdate: med_date
-    enddate: med_date
+    pid: patient_id
     value: dose_value
     unit_type: unit_type
     frequency_type: freq_type
     frequency_value: frequency_value
+    route_type: route
     agent_id: drug_used
+    startdate: medication-date
+    enddate: medication-date
+
+
 

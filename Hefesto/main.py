@@ -117,6 +117,7 @@ class Hefesto():
                         if r == element[1]:
                             dict_element = {element[0]:row[1][r]}
                             row_df[milisec_point].update(dict_element)
+                            
 
                 # Store formed element into the final table:
                 final_row_df = pd.DataFrame(row_df[milisec_point], index=[1])
@@ -125,13 +126,20 @@ class Hefesto():
         # Reset Index:    
         resulting_df = resulting_df.reset_index(drop=True)
         # Turn any nan to None:
+
         resulting_df = resulting_df.where(pd.notnull(resulting_df), None)
+
+
         # Value edition:
         resulting_df = self.valueEdition(resulting_df)
+        resulting_df = resulting_df.where(pd.notnull(resulting_df), None)
+
+
         # Clean blanks:
         resulting_df = self.cleanBlanks(resulting_df)
-        
         # uniqid generation:
+        # print(resulting_df)
+
         resulting_df['uniqid'] = ""
         for i in resulting_df.index:
             resulting_df.at[i, "uniqid"] = milisec()
@@ -144,7 +152,7 @@ class Hefesto():
     def cleanBlanks(self, resulting_df): # TODO solve the attribute_type value problem
 
         for row_final in resulting_df.iterrows():
-            if row_final[1]["value"] == None and row_final[1]["valueIRI"] == None and row_final[1]["comments"] == None and row_final[1]["agent_id"] == None:
+            if row_final[1]["value"] == None and row_final[1]["valueIRI"] == None and row_final[1]["comments"] == None and row_final[1]["agent_id"] == None and row_final[1]["target_type"] == None:
                 resulting_df = resulting_df.drop(row_final[0])
         del resulting_df["value"]
         del resulting_df["valueIRI"]
@@ -170,6 +178,7 @@ class Hefesto():
             "xsd:float": "value_float",
             "xsd:integer":"value_integer"
         }
+        modelList = ["Deathdate","First_Visit","Symptoms_onset"]
         
         # Value edition:
         for index, row in resulting_df.iterrows():
@@ -178,11 +187,6 @@ class Hefesto():
                 # value ---> value_DATATYPE:
                 if row["value_datatype"] == k:
                     resulting_df.at[index, v] = resulting_df["value"][index]
-                    resulting_df = resulting_df.where(pd.notnull(resulting_df), None)
-
-                # enddate correction:
-                if row["startdate"] != None and row["enddate"] == None:
-                    resulting_df.at[index,"enddate"] = resulting_df["startdate"][index]
                     resulting_df = resulting_df.where(pd.notnull(resulting_df), None)
 
             for k,v in valueRelation.items():
@@ -195,6 +199,19 @@ class Hefesto():
             if row["model"] == "Genetic":
                 resulting_df.at[index, "attribute_id_value"] = resulting_df["value"][index]
                 resulting_df.at[index, "value_string"] = None # Deleting the value_string in case it moves from value to value_string
+                resulting_df = resulting_df.where(pd.notnull(resulting_df), None)
+
+            if row["value"] != None and row["value_datatype"] == "xsd:date":
+                resulting_df.at[index, "date"] = resulting_df["value"][index]
+                resulting_df = resulting_df.where(pd.notnull(resulting_df), None)
+
+            if row["value"] != None and row["value_datatype"] == "xsd:float" and row["model"] in modelList:
+                resulting_df.at[index, "age"] = resulting_df["value"][index]
+                resulting_df = resulting_df.where(pd.notnull(resulting_df), None)
+
+            # enddate correction:
+            if row["startdate"] != None and row["enddate"] == None:
+                resulting_df.at[index,"enddate"] = resulting_df["startdate"][index]
                 resulting_df = resulting_df.where(pd.notnull(resulting_df), None)
 
         return resulting_df
@@ -276,7 +293,7 @@ class Hefesto():
 
 # # Test 1:
 
-# test = Hefesto(datainput = "../data/INPUT_DATA_test.csv")
+# test = Hefesto(datainput = "../data/INPUT_DATA.csv")
 # transform = test.transformFiab()
 # transform.to_csv ("../data/OUTPUT_DATA.csv", index = False, header=True)
 
