@@ -26,7 +26,6 @@ class Hefesto():
         # Create an object as dictonary to reduce duplicate calls:
         self.reg = dict()
 
-
     def transformFiab(self):
 
     # Import static template for all CDE terms:
@@ -209,6 +208,10 @@ class Hefesto():
                 resulting_df.at[index, "age"] = resulting_df["value"][index]
                 resulting_df = resulting_df.where(pd.notnull(resulting_df), None)
 
+            if row["model"] == "Diagnosis":
+                resulting_df.at[index, "date"] = resulting_df["startdate"][index]
+                resulting_df = resulting_df.where(pd.notnull(resulting_df), None)
+
             # enddate correction:
             if row["startdate"] != None and row["enddate"] == None:
                 resulting_df.at[index,"enddate"] = resulting_df["startdate"][index]
@@ -297,13 +300,13 @@ class Hefesto():
 # transform = test.transformFiab()
 # transform.to_csv ("../data/OUTPUT_DATA.csv", index = False, header=True)
 
-# # # Test 2
-# with open("../data/CDEconfig.yaml") as file:
-#     configuration = yaml.load(file, Loader=yaml.FullLoader)
+# Test 2
+with open("../data/CDEconfig.yaml") as file:
+    configuration = yaml.load(file, Loader=yaml.FullLoader)
 
-# test = Hefesto(datainput = "../data/INPUT_DATA2.csv")
-# transform = test.transformShape(configuration=configuration, clean_blanks = True) #, clean_blanks=False
-# # label = test.get_label("output_type")
-# # url_from_label= test.get_uri("output_type_label","ncit")
-# # repl= test.replacement("output_type_label", "Date","DateXXX", duplicate=False)
-# transform.to_csv ("../data/OUTPUT_DATA2.csv", index = False, header=True)
+test = Hefesto(datainput = "../data/INPUT_DATA2.csv")
+transform = test.transformShape(configuration=configuration, clean_blanks = True) #, clean_blanks=False
+# label = test.get_label("output_type")
+# url_from_label= test.get_uri("output_type_label","ncit")
+# repl= test.replacement("output_type_label", "Date","DateXXX", duplicate=False)
+transform.to_csv ("../data/OUTPUT_DATA2.csv", index = False, header=True)

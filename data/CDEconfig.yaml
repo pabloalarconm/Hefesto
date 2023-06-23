@@ -12,8 +12,8 @@ Birthyear:
   columns:
     pid: patient_id
     value: birthyear
-    startdate: first_visit_date
-    enddate: first_visit_date
+    startdate: birthdate
+    enddate: birthdate
     
 
 Sex:
