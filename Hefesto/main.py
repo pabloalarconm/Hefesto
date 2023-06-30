@@ -165,9 +165,9 @@ class Hefesto():
             "Sex":"attribute_type",
             "Status":"attribute_type",
             "Diagnosis":"attribute_type",
-            "Genetic":"attribute_id",
+            "Genetic":"value_id",
             "Symptoms":"attribute_type",
-            "Imaging":"attribute_id",
+            "Imaging":"value_id",
             "Clinical_trial":"attribute_type"
         }
         # Datatype:
@@ -195,19 +195,22 @@ class Hefesto():
                     resulting_df = resulting_df.where(pd.notnull(resulting_df), None)
 
             # attribute_id_value
-            if row["model"] == "Genetic":
-                resulting_df.at[index, "attribute_id_value"] = resulting_df["value"][index]
-                resulting_df.at[index, "value_string"] = None # Deleting the value_string in case it moves from value to value_string
-                resulting_df = resulting_df.where(pd.notnull(resulting_df), None)
+            # if row["model"] == "Genetic":
+            #     resulting_df.at[index, "attribute_id_value"] = resulting_df["value"][index]
+            #     resulting_df.at[index, "value_string"] = None # Deleting the value_string in case it moves from value to value_string
+            #     resulting_df = resulting_df.where(pd.notnull(resulting_df), None)
 
+            # Pass value date into date context
             if row["value"] != None and row["value_datatype"] == "xsd:date":
                 resulting_df.at[index, "date"] = resulting_df["value"][index]
                 resulting_df = resulting_df.where(pd.notnull(resulting_df), None)
 
+            # Pass value age into age context
             if row["value"] != None and row["value_datatype"] == "xsd:float" and row["model"] in modelList:
                 resulting_df.at[index, "age"] = resulting_df["value"][index]
                 resulting_df = resulting_df.where(pd.notnull(resulting_df), None)
 
+            # Move startdate of diagnosis to date context
             if row["model"] == "Diagnosis":
                 resulting_df.at[index, "date"] = resulting_df["startdate"][index]
                 resulting_df = resulting_df.where(pd.notnull(resulting_df), None)
@@ -301,12 +304,12 @@ class Hefesto():
 # transform.to_csv ("../data/OUTPUT_DATA.csv", index = False, header=True)
 
 # Test 2
-with open("../data/CDEconfig.yaml") as file:
-    configuration = yaml.load(file, Loader=yaml.FullLoader)
+# with open("../data/CDEconfig.yaml") as file:
+#     configuration = yaml.load(file, Loader=yaml.FullLoader)
 
-test = Hefesto(datainput = "../data/INPUT_DATA2.csv")
-transform = test.transformShape(configuration=configuration, clean_blanks = True) #, clean_blanks=False
-# label = test.get_label("output_type")
-# url_from_label= test.get_uri("output_type_label","ncit")
-# repl= test.replacement("output_type_label", "Date","DateXXX", duplicate=False)
-transform.to_csv ("../data/OUTPUT_DATA2.csv", index = False, header=True)
+# test = Hefesto(datainput = "../data/INPUT_DATA2.csv")
+# transform = test.transformShape(configuration=configuration, clean_blanks = True) #, clean_blanks=False
+# # label = test.get_label("output_type")
+# # url_from_label= test.get_uri("output_type_label","ncit")
+# # repl= test.replacement("output_type_label", "Date","DateXXX", duplicate=False)
+# transform.to_csv ("../data/OUTPUT_DATA2.csv", index = False, header=True)
