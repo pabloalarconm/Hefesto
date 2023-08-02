@@ -16,13 +16,29 @@ Hefesto serves as a module dedicated to performing a curation step prior to the 
 
 * Creation of the column called `uniqid` that assigns a unique identifier to each observation. This prevents the RDF instances from overlapping with one another, ensuring their distinctiveness and integrity.
 
+## Dockerized implementation:
 
-##  Installation:
+There's a Docker-based implementation controlled via API (using FastAPI) that you can use for mounting this data transformation step as a part of your CDE implementation. Use our docker compose to control your Docker image, ports where its located and volumes in order to pass your CSV-based CDE patient data:
+
+```yaml
+version: "3.3"
+
+services:
+  api:
+    image: pabloalarconm/hefesto_fiab:0.0.6
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/code/data
+```
+
+## Local usage:
+
+###  Installation:
 
 ```bash
 pip install Hefesto
 ```
-## Usage:
 **Requirements:**
 
 - CSV datatable with your CDE data based on [CDE implementation glossary](https://github.com/ejp-rd-vp/CDE-semantic-model-implementations/blob/master/CDE_version_2.0.0/CSV_docs/glossary.md)
@@ -36,20 +52,4 @@ import yaml
 test = Hefesto(datainput = "../data/preCDE.csv") # Use your own path for your CSV input data
 transform = test.transform_Fiab()
 transform.to_csv ("../data/CDE.csv", index = False, header=True) # Change this path to the location where your resulting data should be located
-```
-
-## Dockerized implementation:
-
-There's a Docker-based implementation controlled via API (using FastAPI) that you can use for mounting this data transformation step as a part of your CDE implementation. Use our docker compose to control your Docker image, ports where its located and volumes in order to pass your CSV-based CDE patient data:
-
-```yaml
-version: "3.3"
-
-services:
-  api:
-    image: pabloalarconm/hefesto_fiab:0.0.5
-    ports:
-      - "8000:8000"
-    volumes:
-      - ./data:/code/data
 ```
