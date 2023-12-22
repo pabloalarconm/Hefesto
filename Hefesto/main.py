@@ -1,7 +1,7 @@
 import pandas as pd
 from perseo.main import milisec
-# from template import Template
-from Hefesto.template import Template
+from template2 import Template
+# from Hefesto.template import Template
 import sys
 import yaml
 import math
@@ -151,7 +151,7 @@ class Hefesto():
     def cleanBlanks(self, resulting_df): # TODO solve the attribute_type value problem
 
         for row_final in resulting_df.iterrows():
-            if row_final[1]["value"] == None and row_final[1]["valueIRI"] == None and row_final[1]["comments"] == None and row_final[1]["agent_id"] == None and row_final[1]["target_type"] == None:
+            if row_final[1]["value"] == None and row_final[1]["attribute_type"] == None and row_final[1]["output_id"] == None and row_final[1]["activity_type"] == None and row_final[1]["target_type"] == None:
                 resulting_df = resulting_df.drop(row_final[0])
         del resulting_df["value"]
         del resulting_df["valueIRI"]
@@ -165,10 +165,12 @@ class Hefesto():
             "Sex":"attribute_type",
             "Status":"attribute_type",
             "Diagnosis":"attribute_type",
-            "Genetic":"value_id",
-            "Symptoms":"attribute_type",
-            "Imaging":"value_id",
-            "Clinical_trial":"attribute_type"
+            "Genetic":"output_id",
+            "Symptom":"attribute_type",
+            "Imaging":"output_id",
+            "Clinical_trial":"attribute_type",
+            # "Medication": "concentration_value"
+            
         }
         # Datatype:
         datatypeRelation = {
@@ -177,7 +179,7 @@ class Hefesto():
             "xsd:float": "value_float",
             "xsd:integer":"value_integer"
         }
-        modelList = ["Deathdate","First_Visit","Symptoms_onset"]
+        modelList = ["Deathdate","First_visit","Symptoms_onset"]
         
         # Value edition:
         for index, row in resulting_df.iterrows():
@@ -201,8 +203,8 @@ class Hefesto():
             #     resulting_df = resulting_df.where(pd.notnull(resulting_df), None)
 
             # Pass value date into date context
-            if row["value"] != None and row["value_datatype"] == "xsd:date":
-                resulting_df.at[index, "date"] = resulting_df["value"][index]
+            if row["value"] != None and row["value_datatype"] == "xsd:date" and row["startdate"] == None:
+                resulting_df.at[index, "startdate"] = resulting_df["value"][index]
                 resulting_df = resulting_df.where(pd.notnull(resulting_df), None)
 
             # Pass value age into age context
@@ -210,10 +212,10 @@ class Hefesto():
                 resulting_df.at[index, "age"] = resulting_df["value"][index]
                 resulting_df = resulting_df.where(pd.notnull(resulting_df), None)
 
-            # Move startdate of diagnosis to date context
-            if row["model"] == "Diagnosis":
-                resulting_df.at[index, "date"] = resulting_df["startdate"][index]
-                resulting_df = resulting_df.where(pd.notnull(resulting_df), None)
+            # # Move startdate of diagnosis to date context
+            # if row["model"] == "Diagnosis":
+            #     resulting_df.at[index, "date"] = resulting_df["startdate"][index]
+            #     resulting_df = resulting_df.where(pd.notnull(resulting_df), None)
 
             # enddate correction:
             if row["startdate"] != None and row["enddate"] == None:
@@ -297,20 +299,20 @@ class Hefesto():
         return new
         
 
-# # Test 1:
+# Test 1:
 
 # test = Hefesto(datainput = "../data/INPUT_DATA.csv")
 # transform = test.transformFiab()
 # transform.to_csv ("../data/OUTPUT_DATA_new.csv", index = False, header=True)
 
-# # Test 2:
+# Test 2:
 
-# with open("../data/CDEconfig.yaml") as file:
-#     configuration = yaml.load(file, Loader=yaml.FullLoader)
+with open("../data/CAREconfig.yaml") as file:
+    configuration = yaml.load(file, Loader=yaml.FullLoader)
 
-# test = Hefesto(datainput = "../data/INPUT_DATA2.csv")
-# transform = test.transformShape(configuration=configuration, clean_blanks = True) #, clean_blanks=False
+test = Hefesto(datainput = "../data/INPUT_DATA3.csv")
+transform = test.transformShape(configuration=configuration, clean_blanks = True) #, clean_blanks=False
 # label = test.get_label("output_type")
 # url_from_label= test.get_uri("output_type_label","ncit")
 # repl= test.replacement("output_type_label", "Date","DateXXX", duplicate=False)
-# transform.to_csv ("../data/OUTPUT_DATA2_new.csv", index = False, header=True)
+transform.to_csv ("../data/OUTPUT_DATA3.csv", index = False, header=True)

@@ -1,8 +1,8 @@
-from Hefesto.main import Hefesto
-import yaml
+import pandas as pd
 
-# Test 1:
+from toolkit.main import Toolkit
 
-test = Hefesto(datainput = "data/INPUT_DATA.csv")
-transform = test.transformFiab()
-transform.to_csv ("data/OUTPUT_DATA.csv", index = False, header=True)
+test= Toolkit()
+
+test_done = test.whole_quality_control(input_data="data/preCARE.csv")
+test_done.to_csv ("data/CARE_test.csv", index = False, header=True)
